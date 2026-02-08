@@ -170,7 +170,7 @@ export default function AnalyticsContent({ onNavigate = () => console.log("Navig
 
       {/* Charts Section */}
       <section className="charts-grid">
-        {/* Comparative Trends Chart */}
+        {/* Comparative Trends Chart - Using semantic <article> */}
         <article className="chart-card wide">
           <h3 className="chart-title">Academic Trends Comparison</h3>
           <figure className="chart-container">
@@ -233,9 +233,9 @@ export default function AnalyticsContent({ onNavigate = () => console.log("Navig
         </article>
       </section>
      
-      {/* Bottom Section: At-Risk Table & Activity Feed */}
+      {/* Bottom Section: At-Risk Table & Activity Feed - Using semantic <section> */}
       <section className="bottom-grid">
-        {/* At-Risk Table */}
+        {/* At-Risk Table - Using semantic <article> */}
         <article className="table-card">
           <header className="table-header">
             <h3 className="table-title">
