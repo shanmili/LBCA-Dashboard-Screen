@@ -24,7 +24,7 @@ import {
   Cell
 } from 'recharts';
 
-// Mock Data (same as before)
+// Mock Data
 const performanceData = [
   { name: 'Q1', SectionA: 82, SectionB: 78, SectionC: 80 },
   { name: 'Q2', SectionA: 84, SectionB: 79, SectionC: 82 },
@@ -115,7 +115,7 @@ export default function AnalyticsContent({ onNavigate = () => console.log("Navig
 
   return (
     <section className="analytics-container">
-      {/* Filters Row - Using semantic <header> */}
+      {/* Filters Row */}
       <header className="filters-row">
         <div>
           <h2 className="section-title">Overview</h2>
@@ -139,7 +139,7 @@ export default function AnalyticsContent({ onNavigate = () => console.log("Navig
         </div>
       </header>
      
-      {/* KPI Cards - Using semantic <section> */}
+      {/* KPI Cards */}
       <section className="kpi-grid">
         <StatCard
           title="Total Students"
@@ -168,9 +168,9 @@ export default function AnalyticsContent({ onNavigate = () => console.log("Navig
         />
       </section>
 
-      {/* Charts Section - Using semantic <section> */}
+      {/* Charts Section */}
       <section className="charts-grid">
-        {/* Comparative Trends Chart - Using semantic <article> */}
+        {/* Comparative Trends Chart  */}
         <article className="chart-card wide">
           <h3 className="chart-title">Academic Trends Comparison</h3>
           <figure className="chart-container">
@@ -189,7 +189,7 @@ export default function AnalyticsContent({ onNavigate = () => console.log("Navig
           </figure>
         </article>
 
-        {/* Attendance Donut Chart - Using semantic <article> */}
+        {/* Attendance Donut Chart*/}
         <article className="chart-card">
           <h3 className="chart-title">Attendance</h3>
           <figure className="pie-container">
@@ -233,9 +233,9 @@ export default function AnalyticsContent({ onNavigate = () => console.log("Navig
         </article>
       </section>
      
-      {/* Bottom Section: At-Risk Table & Activity Feed - Using semantic <section> */}
+      {/* Bottom Section: At-Risk Table & Activity Feed  */}
       <section className="bottom-grid">
-        {/* At-Risk Table - Using semantic <article> */}
+        {/* At-Risk Table  */}
         <article className="table-card">
           <header className="table-header">
             <h3 className="table-title">
