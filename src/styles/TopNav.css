@@ -1,0 +1,72 @@
+
+/* Wrapper to position the dropdown correctly */
+.user-menu-container {
+  position: relative;
+}
+
+/* The floating white box */
+.user-dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 0.5rem;
+  width: 200px;
+  background-color: white;
+  border: 1px solid #E5E7EB;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  z-index: 50; /* Ensures it sits on top of everything else */
+  padding: 0.5rem 0;
+}
+
+/* Header inside dropdown */
+.dropdown-header {
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  color: #374151;
+}
+
+/* Horizontal line */
+.user-dropdown hr {
+  margin: 0.25rem 0;
+  border: 0;
+  border-top: 1px solid #F3F4F6;
+}
+
+/* The buttons inside the menu */
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  color: #4B5563;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+}
+
+.dropdown-item span {
+  margin-left: 0.75rem;
+}
+
+.dropdown-item:hover {
+  background-color: #F3F4F6;
+  color: #1F2937;
+}
+
+/* Special style for Log Out (Red color on hover) */
+.dropdown-item.logout:hover {
+  background-color: #FEF2F2;
+  color: #EF4444;
+}
+
+/* Animation for the arrow icon */
+.dropdown-icon {
+  transition: transform 0.2s;
+}
+
+.dropdown-icon.rotate {
+  transform: rotate(180deg);
+}
