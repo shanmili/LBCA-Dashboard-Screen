@@ -261,3 +261,61 @@
   overflow-y: auto;
   background-color: #F9FAFB;
 }
+
+/* Students Page Styles */
+.students-page {
+  padding: 1.5rem;
+}
+
+.students-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.students-header h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  color: #1F4788;
+}
+
+.students-table-container {
+  background: white;
+  border-radius: 0.75rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.students-list-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.students-list-table th,
+.students-list-table td {
+  padding: 1rem 1.5rem;
+  text-align: left;
+  border-bottom: 1px solid #E5E7EB;
+}
+
+.students-list-table th {
+  background-color: #F9FAFB;
+  font-weight: 600;
+  color: #374151;
+  font-size: 0.875rem;
+  text-transform: uppercase;
+}
+
+.students-list-table td {
+  color: #1F2937;
+  font-size: 0.95rem;
+}
+
+.students-list-table tbody tr:hover {
+  background-color: #F3F4F6;
+}
+
+.students-list-table tbody tr:last-child td {
+  border-bottom: none;
+}
