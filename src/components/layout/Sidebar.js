@@ -40,13 +40,7 @@ const Sidebar = ({ isOpen, activeTab, onNavigate }) => {
           onClick={() => onNavigate('grades')}
           collapsed={!isOpen} 
         />
-        <SidebarItem 
-          icon={CalendarCheck} 
-          label="Attendance" 
-          active={activeTab === 'attendance'} 
-          onClick={() => onNavigate('attendance')}
-          collapsed={!isOpen} 
-        />
+        
         <SidebarItem 
           icon={AlertTriangle} 
           label="AI Risk Prediction" 
