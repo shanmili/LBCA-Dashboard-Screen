@@ -11,7 +11,7 @@ import {
 
 import '../../styles/TopNav.css'; 
 
-const TopNav = ({ onToggle }) => {
+const TopNav = ({ onToggle, onLogout }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
 
@@ -63,7 +63,7 @@ const TopNav = ({ onToggle }) => {
                 <Settings size={16} /> <span>Settings</span>
               </button>
               <hr />
-              <button className="dropdown-item logout" onClick={() => setIsDropdownOpen(false)}>
+              <button className="dropdown-item logout" onClick={() => { setIsDropdownOpen(false); if (onLogout) onLogout(); }}>
                 <LogOut size={16} /> <span>Log Out</span>
               </button>
             </div>

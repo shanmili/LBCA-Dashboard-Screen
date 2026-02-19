@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Sidebar from '../components/layout/Sidebar';
 import TopNav from '../components/layout/TopNav';
 import AnalyticsContent from '../components/dashboard/AnalyticsContent';
 import StudentsPage from '../components/dashboard/StudentsPage';
 import UnderMaintenance from '../components/common/UnderMaintenance'; 
+import useDashboardState from '../hooks/useDashboardState';
 import '../styles/DashboardScreen.css';
 
-export default function DashboardScreen() {
-  const [sidebarOpen, setSidebarOpen] = useState(true);
-  const [activeTab, setActiveTab] = useState('dashboard'); //iyang memory
+export default function DashboardScreen({ onLogout }) {
+  const { sidebarOpen, activeTab, setActiveTab, toggleSidebar } = useDashboardState();
 
   // This function decides what to show in the middle
   const renderContent = () => {
@@ -42,7 +42,7 @@ export default function DashboardScreen() {
       />
 
       <div className="main-content">
-        <TopNav onToggle={() => setSidebarOpen(!sidebarOpen)} />
+        <TopNav onToggle={toggleSidebar} onLogout={onLogout} />
         
         <main className="content-area">
           {/* Call the function to render the correct page */}
