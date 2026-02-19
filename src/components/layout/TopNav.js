@@ -11,9 +11,20 @@ import {
 
 import '../../styles/TopNav.css'; 
 
-const TopNav = ({ onToggle, onLogout }) => {
+const pageTitles = {
+  dashboard: 'Analytics Dashboard',
+  students: 'Students',
+  grades: 'Grades & Records',
+  attendance: 'Attendance Module',
+  risk: 'AI Risk Prediction',
+  messages: 'Messages',
+  settings: 'Settings',
+};
+
+const TopNav = ({ onToggle, onLogout, activeTab }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
+  const pageTitle = pageTitles[activeTab] || 'Analytics Dashboard';
 
   return (
     <header className="top-nav">
@@ -21,7 +32,7 @@ const TopNav = ({ onToggle, onLogout }) => {
         <button className="menu-button" onClick={onToggle}>
           <Menu size={20} />
         </button>
-        <h1 className="page-title">Analytics Dashboard</h1>
+        <h1 className="page-title">{pageTitle}</h1>
       </div>
 
       <div className="nav-right">

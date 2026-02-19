@@ -42,7 +42,7 @@ export default function DashboardScreen({ onLogout }) {
       />
 
       <div className="main-content">
-        <TopNav onToggle={toggleSidebar} onLogout={onLogout} />
+        <TopNav onToggle={toggleSidebar} onLogout={onLogout} activeTab={activeTab} />
         
         <main className="content-area">
           {/* Call the function to render the correct page */}
