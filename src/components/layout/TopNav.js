@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { 
   Menu, 
   Search, 
@@ -14,12 +13,7 @@ import '../../styles/TopNav.css';
 
 const TopNav = ({ onToggle }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const navigate = useNavigate();
 
-  const handleSettings = () => {
-    setIsDropdownOpen(false);
-    navigate('/settings');
-  };
 
   return (
     <header className="top-nav">
@@ -65,7 +59,7 @@ const TopNav = ({ onToggle }) => {
               <button className="dropdown-item">
                 <User size={16} /> <span>Profile</span>
               </button>
-              <button className="dropdown-item" onClick={handleSettings}>
+              <button className="dropdown-item">
                 <Settings size={16} /> <span>Settings</span>
               </button>
               <hr />
@@ -81,3 +75,5 @@ const TopNav = ({ onToggle }) => {
 };
 
 export default TopNav;
+
+//Top Navigation 
