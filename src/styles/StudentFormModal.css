@@ -149,6 +149,10 @@
   border-top: 1px solid #F3F4F6;
 }
 
+.subjects-form-row.four-col {
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+}
+
 .subjects-form-row input,
 .subjects-form-row select {
   padding: 0.4rem 0.5rem;
@@ -202,4 +206,12 @@
 
 .submit-btn:hover {
   background: #173a6e;
+}
+
+/* Helper text */
+.form-helper-text {
+  margin: 0.75rem 0 0 0;
+  font-size: 0.78rem;
+  color: #6B7280;
+  font-style: italic;
 }

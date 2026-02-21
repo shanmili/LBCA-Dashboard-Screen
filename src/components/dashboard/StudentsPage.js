@@ -1,26 +1,17 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Users, Search, Filter } from 'lucide-react';
-import { studentsData } from '../../data/mockData';
+import useDashStudentsState from '../../hooks/useDashStudentsState';
 import '../../styles/StudentsPage.css';
 
-const SCHOOL_YEARS = ['2025-2026', '2024-2025', '2023-2024'];
-
 const StudentsPage = ({ onNavigate }) => {
-  const [searchTerm, setSearchTerm] = useState('');
-  const [sectionFilter, setSectionFilter] = useState('All');
-  const [selectedSchoolYear, setSelectedSchoolYear] = useState('2025-2026');
-
-  const filteredStudents = studentsData.filter(student => {
-    const matchesSearch = student.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                          student.id.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesSection = sectionFilter === 'All' || student.section === sectionFilter;
-    return matchesSearch && matchesSection;
-  });
-
-  const getStatusBadgeClass = (status) => {
-    if (status === 'Behind') return 'status-badge at-risk';
-    return 'status-badge on-track';
-  };
+  const {
+    SCHOOL_YEARS,
+    searchTerm, setSearchTerm,
+    sectionFilter, setSectionFilter,
+    selectedSchoolYear, setSelectedSchoolYear,
+    filteredStudents,
+    getStatusBadgeClass,
+  } = useDashStudentsState();
 
   return (
     <div className="students-page">
@@ -118,7 +109,7 @@ const StudentsPage = ({ onNavigate }) => {
       </div>
 
       <div className="students-footer">
-        <p>Showing {filteredStudents.length} of {studentsData.length} students</p>
+        <p>Showing {filteredStudents.length} students</p>
       </div>
     </div>
   );

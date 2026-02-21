@@ -1,31 +1,20 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Bell, Filter, AlertTriangle, Search } from 'lucide-react';
-import { atRiskStudents } from '../../data/mockData';
+import useEarlyWarningState from '../../hooks/useEarlyWarningState';
 import RiskBadge from '../common/RiskBadge';
 import '../../styles/EarlyWarningPage.css';
 
-const SCHOOL_YEARS = ['2025-2026', '2024-2025', '2023-2024'];
-
 const EarlyWarningPage = ({ onNavigate }) => {
-  const [riskFilter, setRiskFilter] = useState('All');
-  const [sectionFilter, setSectionFilter] = useState('All');
-  const [searchTerm, setSearchTerm] = useState('');
-  const [selectedSchoolYear, setSelectedSchoolYear] = useState('2025-2026');
-
-  const filteredStudents = atRiskStudents.filter(student => {
-    const matchesRisk = riskFilter === 'All' || student.riskLevel === riskFilter;
-    const matchesSection = sectionFilter === 'All' || student.section === sectionFilter;
-    const matchesSearch = student.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                          student.id.toLowerCase().includes(searchTerm.toLowerCase());
-    return matchesRisk && matchesSection && matchesSearch;
-  });
-
-  // Count by risk level
-  const riskCounts = {
-    high: atRiskStudents.filter(s => s.riskLevel === 'High').length,
-    medium: atRiskStudents.filter(s => s.riskLevel === 'Medium').length,
-    low: atRiskStudents.filter(s => s.riskLevel === 'Low').length,
-  };
+  const {
+    SCHOOL_YEARS,
+    riskFilter, setRiskFilter,
+    sectionFilter, setSectionFilter,
+    searchTerm, setSearchTerm,
+    selectedSchoolYear, setSelectedSchoolYear,
+    allStudents,
+    filteredStudents,
+    riskCounts,
+  } = useEarlyWarningState();
 
   return (
     <div className="early-warning-page">
@@ -153,13 +142,13 @@ const EarlyWarningPage = ({ onNavigate }) => {
         ) : (
           <div className="no-alerts">
             <Bell size={48} color="#9CA3AF" />
-            <p>No at-risk students found matching your filters.</p>
+            <p>No students found matching your filters.</p>
           </div>
         )}
       </div>
 
       <div className="warning-footer">
-        <p>Showing {filteredStudents.length} of {atRiskStudents.length} at-risk students</p>
+        <p>Showing {filteredStudents.length} of {allStudents.length} students</p>
       </div>
     </div>
   );

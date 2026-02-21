@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Sidebar from '../components/layout/Sidebar';
 import TopNav from '../components/layout/TopNav';
 import AnalyticsContent from '../components/dashboard/AnalyticsContent';
@@ -10,16 +10,7 @@ import useDashboardState from '../hooks/useDashboardState';
 import '../styles/DashboardScreen.css';
 
 export default function DashboardScreen({ onLogout }) {
-  const { sidebarOpen, activeTab, setActiveTab, toggleSidebar } = useDashboardState();
-  const [selectedStudentId, setSelectedStudentId] = useState(null);
-
-  // Navigation handler that supports student profile navigation
-  const handleNavigate = (tab, studentId = null) => {
-    if (tab === 'student-profile' && studentId) {
-      setSelectedStudentId(studentId);
-    }
-    setActiveTab(tab);
-  };
+  const { sidebarOpen, activeTab, setActiveTab, toggleSidebar, selectedStudentId, handleNavigate } = useDashboardState();
 
   // This function decides what to show in the middle
   const renderContent = () => {

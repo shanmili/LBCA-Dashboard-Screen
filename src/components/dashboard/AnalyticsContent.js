@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Users, TrendingUp, AlertTriangle, Filter, BookOpen } from 'lucide-react';
 import '../../styles/AnalyticsContent.css'; 
 
@@ -7,47 +7,21 @@ import TrendChart from './TrendChart';
 import AttendanceChart from './AttendanceChart';
 import StudentsTable from '../student/StudentsTable';
 import ActivityFeed from './ActivityFeed';
-
-// Import PACE-based data 
-import { 
-  paceCompletionData,
-  quarterlyPaceData,
-  sectionStatsData,
-  quarterlyStatsData,
-  attendanceData, 
-  atRiskStudents, 
-  activityFeed 
-} from '../../data/mockData'; 
-
-const SCHOOL_YEARS = ['2025-2026', '2024-2025', '2023-2024'];
+import useAnalyticsState from '../../hooks/useAnalyticsState';
 
 export default function AnalyticsContent({ onNavigate = () => {} }) {
-  const [selectedSection, setSelectedSection] = useState('All');
-  const [selectedQuarter, setSelectedQuarter] = useState('Q2');
-  const [riskFilter, setRiskFilter] = useState('All');
-  const [selectedSchoolYear, setSelectedSchoolYear] = useState('2025-2026');
-
-  // Get stats based on quarter and section selection
-  const getStats = () => {
-    const quarterData = quarterlyStatsData[selectedQuarter];
-    if (quarterData && quarterData[selectedSection]) {
-      return { ...quarterData[selectedSection], attendance: sectionStatsData[selectedSection]?.attendance || 92.3 };
-    }
-    return sectionStatsData[selectedSection] || sectionStatsData['All'];
-  };
-
-  const currentStats = getStats();
-  
-  // Get PACE chart data based on quarter
-  const getPaceChartData = () => {
-    return quarterlyPaceData[selectedQuarter] || paceCompletionData;
-  };
-  
-  const filteredStudents = atRiskStudents.filter(student => {
-    const sectionMatch = selectedSection === 'All' || student.section === selectedSection;
-    const riskMatch = riskFilter === 'All' || student.riskLevel === riskFilter;
-    return sectionMatch && riskMatch;
-  });
+  const {
+    SCHOOL_YEARS,
+    selectedSection, setSelectedSection,
+    selectedQuarter, setSelectedQuarter,
+    riskFilter, setRiskFilter,
+    selectedSchoolYear, setSelectedSchoolYear,
+    currentStats,
+    liveAttendanceData,
+    getPaceChartData,
+    filteredStudents,
+    activityFeed,
+  } = useAnalyticsState();
 
   return (
     <section className="analytics-container">
@@ -147,7 +121,7 @@ export default function AnalyticsContent({ onNavigate = () => {} }) {
           title="PACE Completion Trend" 
           yAxisLabel="Completion %" 
         />
-        <AttendanceChart data={attendanceData} overallPercentage={currentStats.attendance} />
+        <AttendanceChart data={liveAttendanceData} overallPercentage={currentStats.attendance} />
       </section>
       
       {/* Tables & Activity */}

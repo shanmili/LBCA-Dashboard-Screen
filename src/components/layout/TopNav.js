@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { 
   Menu, 
   Search, 
@@ -8,21 +8,11 @@ import {
   User, 
   Settings 
 } from 'lucide-react';
-
+import useTopNavState from '../../hooks/useTopNavState';
 import '../../styles/TopNav.css'; 
 
-const pageTitles = {
-  dashboard: 'Analytics Dashboard',
-  students: 'Students',
-  pace: 'PACE Progress & Scores',
-  risk: 'Early Warning Alerts',
-  'student-profile': 'Student Profile',
-};
-
 const TopNav = ({ onToggle, onLogout, activeTab }) => {
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-
-  const pageTitle = pageTitles[activeTab] || 'Analytics Dashboard';
+  const { isDropdownOpen, toggleDropdown, closeDropdown, pageTitle } = useTopNavState(activeTab);
 
   return (
     <header className="top-nav">
@@ -48,7 +38,7 @@ const TopNav = ({ onToggle, onLogout, activeTab }) => {
         <div className="user-menu-container">
           <div 
             className="user-profile" 
-            onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+            onClick={toggleDropdown}
           >
             <div className="avatar">AD</div>
             <div className="user-info">
@@ -72,7 +62,7 @@ const TopNav = ({ onToggle, onLogout, activeTab }) => {
                 <Settings size={16} /> <span>Settings</span>
               </button>
               <hr />
-              <button className="dropdown-item logout" onClick={() => { setIsDropdownOpen(false); if (onLogout) onLogout(); }}>
+              <button className="dropdown-item logout" onClick={() => { closeDropdown(); if (onLogout) onLogout(); }}>
                 <LogOut size={16} /> <span>Log Out</span>
               </button>
             </div>
