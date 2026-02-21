@@ -6,10 +6,12 @@ import {
   ChevronDown, 
   LogOut, 
   User, 
-  Settings 
+  Sun,
+  Settings /* Not used kay isa pa lang so far ang naa sa setting which is ang theme */
 } from 'lucide-react';
 
 import '../../styles/TopNav.css'; 
+import Theme from '../common/Theme';
 
 const TopNav = ({ onToggle }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -41,7 +43,7 @@ const TopNav = ({ onToggle }) => {
             className="user-profile" 
             onClick={() => setIsDropdownOpen(!isDropdownOpen)}
           >
-            <div className="avatar">AD</div>
+            <div className="avatar">AD</div> 
             <div className="user-info">
               <p className="user-name">Admin User</p>
               <p className="user-role">Administrator</p>
@@ -60,7 +62,7 @@ const TopNav = ({ onToggle }) => {
                 <User size={16} /> <span>Profile</span>
               </button>
               <button className="dropdown-item">
-                <Settings size={16} /> <span>Settings</span>
+                <Sun size={16} /> <span>Theme</span> <Theme />
               </button>
               <hr />
               <button className="dropdown-item logout" onClick={() => setIsDropdownOpen(false)}>

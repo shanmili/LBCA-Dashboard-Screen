@@ -1,4 +1,4 @@
-/* src/styles/UnderMaintenance.css */
+/* styles/UnderMaintenance.css */
 
 .maintenance-container {
   display: flex;
@@ -7,22 +7,22 @@
   justify-content: center;
   height: 100%;
   text-align: center;
-  color: #6B7280;
-  background-color: white;
+  color: var(--text-secondary);
+  background-color: var(--bg-primary);
   border-radius: 8px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow-sm);
   padding: 2rem;
 }
 
 .maintenance-title {
-  color: #1F2937;
+  color: var(--text-primary);
   margin-top: 1rem;
   margin-bottom: 0.5rem;
-  font-size: 1.5rem; /* Added a reasonable size for h2 */
+  font-size: 1.5rem;
   font-weight: bold;
 }
 
 .maintenance-message {
   font-size: 1rem;
-  color: #4B5563;
+  color: var(--text-secondary);
 }

@@ -1,10 +1,7 @@
-
-/* Wrapper to position the dropdown correctly */
 .user-menu-container {
   position: relative;
 }
 
-/* The floating white box */
 .user-dropdown {
   position: absolute;
   top: 100%;
@@ -69,4 +66,62 @@
 
 .dropdown-icon.rotate {
   transform: rotate(180deg);
+}
+
+.user-dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 0.5rem;
+  width: 220px;
+  background-color: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 0.5rem;
+  box-shadow: var(--shadow-md);
+  z-index: 1000;
+  padding: 0.5rem 0;
+}
+
+.dropdown-header {
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+}
+
+.dropdown-header strong {
+  color: var(--text-primary);
+}
+
+.user-dropdown hr {
+  margin: 0.25rem 0;
+  border: 0;
+  border-top: 1px solid var(--border-light);
+}
+
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.2s ease;
+}
+
+.dropdown-item span {
+  margin-left: 0.75rem;
+}
+
+.dropdown-item:hover {
+  background-color: var(--bg-tertiary);
+  color: var(--text-primary);
+}
+
+.dropdown-item.logout:hover {
+  background-color: var(--risk-high-bg);
+  color: var(--risk-high-text);
 }

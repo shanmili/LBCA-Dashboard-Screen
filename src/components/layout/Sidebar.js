@@ -6,16 +6,24 @@ import {
   GraduationCap,
   CalendarCheck,
   AlertTriangle,
-  MessageSquare,
-  Settings
+  MessageSquare
 } from 'lucide-react';
+
+import logo from '../../assets/logo.webp';
 
 // Accept activeTab and onNavigate as props
 const Sidebar = ({ isOpen, activeTab, onNavigate }) => {
   return (
     <nav className={`sidebar ${isOpen ? 'sidebar-open' : 'sidebar-collapsed'}`}>
       <header className="sidebar-header">
-        <span className="sidebar-logo">{isOpen ? 'LBCA ADMIN' : 'LBCA'}</span>
+        {isOpen ? (
+          <>
+            <img src={logo} alt="LBCA Logo" className="sidebar-img" />
+            <span className="sidebar-logo">LBCA ADMIN</span>
+          </>
+        ) : (
+          <img src={logo} alt="LBCA Logo" className="sidebar-img"/>
+        )}
       </header>
       
       <section className="sidebar-menu">

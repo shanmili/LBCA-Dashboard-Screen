@@ -1,0 +1,152 @@
+.theme-toggle-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 16px;
+  border-radius: 8px;
+}
+
+.theme-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.theme-toggle-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  width: 60px;
+  height: 30px;
+  border-radius: 30px;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.toggle-track {
+  width: 100%;
+  height: 100%;
+  border-radius: 30px;
+  background: linear-gradient(145deg, #e0e0e0, #f0f0f0);
+  box-shadow: inset 2px 2px 5px #b8b8b8, inset -2px -2px 5px #ffffff;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.theme-toggle-button.dark .toggle-track {
+  background: linear-gradient(145deg, #2d2d2d, #3d3d3d);
+  box-shadow: inset 2px 2px 5px #1a1a1a, inset -2px -2px 5px #4a4a4a;
+}
+
+.toggle-thumb {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: white;
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  transition: transform 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.theme-toggle-button.dark .toggle-thumb {
+  transform: translateX(30px);
+  background: #333;
+}
+
+/* Global theme variables */
+:root {
+  /* Text colors */
+  --text-primary: #1F2937;
+  --text-secondary: #6B7280;
+  --text-tertiary: #9CA3AF;
+  --text-inverse: #ffffff;
+  
+  /* Background colors */
+  --bg-primary: #ffffff;
+  --bg-secondary: #F9FAFB;
+  --bg-tertiary: #F3F4F6;
+  
+  /* Sidebar */
+  --sidebar-bg: #1F4788;
+  --sidebar-hover: #2E5C8A;
+  --sidebar-text: #ffffff;  
+  --sidebar-border: #2E5C8A;
+  
+  /* Border colors */
+  --border-color: #E5E7EB;
+  --border-light: #F3F4F6;
+  
+  /* Status colors */
+  --success: #10B981;
+  --warning: #F59E0B;
+  --danger: #EF4444;
+  --info: #3B82F6;
+  
+  /* Risk badges */
+  --risk-high-bg: #FEE2E2;
+  --risk-high-text: #DC2626;
+  --risk-high-border: #FECACA;
+  --risk-medium-bg: #FEF3C7;
+  --risk-medium-text: #D97706;
+  --risk-medium-border: #FDE68A;
+  --risk-low-bg: #D1FAE5;
+  --risk-low-text: #059669;
+  --risk-low-border: #A7F3D0;
+  
+  /* Shadows */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="dark"] {
+  /* Text colors */
+  --text-primary: #ffffff;
+  --text-secondary: #D1D5DB;
+  --text-tertiary: #9CA3AF;
+  --text-inverse: #1F2937;
+  
+  /* Background colors */
+  --bg-primary: #1a1a1a;
+  --bg-secondary: #2d2d2d;
+  --bg-tertiary: #333333;
+  
+  /* Sidebar */
+  --sidebar-bg: #1F4788;        
+  --sidebar-hover: #2E5C8A;      
+  --sidebar-text: #ffffff;       
+  --sidebar-border: #2E5C8A;     
+  
+  /* Border colors - dark mode */
+  --border-color: #404040;
+  --border-light: #333333;
+  
+  /* Status colors */
+  --success: #34D399;
+  --warning: #FBBF24;
+  --danger: #F87171;
+  --info: #60A5FA;
+  
+  /* Risk badges */
+  --risk-high-bg: #451a1a;
+  --risk-high-text: #fca5a5;
+  --risk-high-border: #7f1d1d;
+  --risk-medium-bg: #422006;
+  --risk-medium-text: #fcd34d;
+  --risk-medium-border: #78350f;
+  --risk-low-bg: #022c22;
+  --risk-low-text: #6ee7b7;
+  --risk-low-border: #064e3b;
+  
+  /* Shadows */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+}
