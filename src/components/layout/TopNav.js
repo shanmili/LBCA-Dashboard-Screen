@@ -62,10 +62,10 @@ const TopNav = ({ onToggle }) => {
                 <p>Signed in as <strong>Admin</strong></p>
               </div>
               <hr />
-              <button className="dropdown-item">
+              <button className="dropdown-item" onClick={handleSettings}>
                 <User size={16} /> <span>Profile</span>
               </button>
-              <button className="dropdown-item" onClick={handleSettings}>
+              <button className="dropdown-item" > 
                 <Settings size={16} /> <span>Settings</span>
               </button>
               <hr />
