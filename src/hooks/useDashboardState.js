@@ -1,11 +1,31 @@
 import { useState, useEffect } from 'react';
+import { useNavigate, useLocation, useParams } from 'react-router-dom';
+
+// Map URL paths to tab keys
+const PATH_TO_TAB = {
+  '/dashboard': 'dashboard',
+  '/students': 'students',
+  '/pace': 'pace',
+  '/risk': 'risk',
+  '/account-settings': 'account-settings',
+};
 
 export default function useDashboardState() {
   const [sidebarOpen, setSidebarOpen] = useState(() => window.innerWidth > 768);
-  const [activeTab, setActiveTab] = useState('dashboard');
-  const [selectedStudentId, setSelectedStudentId] = useState(null);
+  const navigate = useNavigate();
+  const location = useLocation();
 
-  // Close sidebar on window resize to mobile
+  // Derive activeTab from the current URL
+  const activeTab = (() => {
+    const path = location.pathname;
+    if (path.startsWith('/student/')) return 'student-profile';
+    return PATH_TO_TAB[path] || 'dashboard';
+  })();
+
+  // Derive selectedStudentId from URL param /student/:id
+  const studentIdMatch = location.pathname.match(/^\/student\/(.+)$/);
+  const selectedStudentId = studentIdMatch ? studentIdMatch[1] : null;
+
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth <= 768) {
@@ -16,20 +36,22 @@ export default function useDashboardState() {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
+  const toggleSidebar = () => setSidebarOpen(prev => !prev);
 
   const handleNavigate = (tab, studentId = null) => {
     if (tab === 'student-profile' && studentId) {
-      setSelectedStudentId(studentId);
+      navigate(`/student/${studentId}`);
+    } else {
+      const path = Object.keys(PATH_TO_TAB).find(k => PATH_TO_TAB[k] === tab) || '/dashboard';
+      navigate(path);
     }
-    setActiveTab(tab);
   };
 
   return {
     sidebarOpen,
     setSidebarOpen,
     activeTab,
-    setActiveTab,
+    setActiveTab: (tab) => handleNavigate(tab),
     toggleSidebar,
     selectedStudentId,
     handleNavigate,
