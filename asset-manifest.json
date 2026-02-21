@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/LBCA-Monitoring-System/static/css/main.5f33eeda.css",
-    "main.js": "/LBCA-Monitoring-System/static/js/main.aa42c2ef.js",
+    "main.css": "/LBCA-Monitoring-System/static/css/main.eb1ceba0.css",
+    "main.js": "/LBCA-Monitoring-System/static/js/main.92e027fd.js",
     "static/js/453.329d7767.chunk.js": "/LBCA-Monitoring-System/static/js/453.329d7767.chunk.js",
     "index.html": "/LBCA-Monitoring-System/index.html",
-    "main.5f33eeda.css.map": "/LBCA-Monitoring-System/static/css/main.5f33eeda.css.map",
-    "main.aa42c2ef.js.map": "/LBCA-Monitoring-System/static/js/main.aa42c2ef.js.map",
+    "main.eb1ceba0.css.map": "/LBCA-Monitoring-System/static/css/main.eb1ceba0.css.map",
+    "main.92e027fd.js.map": "/LBCA-Monitoring-System/static/js/main.92e027fd.js.map",
     "453.329d7767.chunk.js.map": "/LBCA-Monitoring-System/static/js/453.329d7767.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.5f33eeda.css",
-    "static/js/main.aa42c2ef.js"
+    "static/css/main.eb1ceba0.css",
+    "static/js/main.92e027fd.js"
   ]
 }
