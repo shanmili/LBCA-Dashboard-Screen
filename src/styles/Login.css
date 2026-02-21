@@ -117,3 +117,50 @@ background-color: var(--sidebar-hover);
 .btn-submit:active {
 transform: scale(0.98);
 }
+/* ===== Responsive: Tablet Portrait ≤768px ===== */
+@media (max-width: 768px) {
+  .login-card {
+    max-width: 24rem;
+    padding: 1.75rem;
+  }
+
+  .title {
+    font-size: 1.35rem;
+  }
+}
+
+/* ===== Responsive: Mobile ≤480px ===== */
+@media (max-width: 480px) {
+  .login-wrapper {
+    padding: 0.75rem;
+  }
+
+  .login-card {
+    max-width: 100%;
+    padding: 1.25rem;
+    border-radius: 0.5rem;
+  }
+
+  .logo-circle {
+    width: 3.5rem;
+    height: 3.5rem;
+  }
+
+  .title {
+    font-size: 1.2rem;
+  }
+
+  .subtitle {
+    font-size: 0.8rem;
+  }
+
+  .form-input {
+    font-size: 0.875rem;
+    padding: 0.5rem 0.75rem 0.5rem 2.25rem;
+  }
+
+  .btn-submit {
+    padding: 0.5rem;
+    font-size: 0.875rem;
+  }
+}

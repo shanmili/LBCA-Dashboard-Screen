@@ -13,7 +13,7 @@ import useTopNavState from '../../hooks/useTopNavState';
 import '../../styles/TopNav.css'; 
 import Theme from '../common/Theme';
 
-const TopNav = ({ onToggle, onLogout, activeTab }) => {
+const TopNav = ({ onToggle, onLogout, activeTab, onNavigate }) => {
   const { isDropdownOpen, toggleDropdown, closeDropdown, pageTitle } = useTopNavState(activeTab);
 
   return (
@@ -57,7 +57,7 @@ const TopNav = ({ onToggle, onLogout, activeTab }) => {
                 <p>Signed in as <strong>Admin</strong></p>
               </div>
               <hr />
-              <button className="dropdown-item">
+              <button className="dropdown-item" onClick={() => { closeDropdown(); if (onNavigate) onNavigate('account-settings'); }}>
                 <User size={16} /> <span>Profile</span>
               </button>
               <button className="dropdown-item">

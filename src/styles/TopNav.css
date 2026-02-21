@@ -70,3 +70,44 @@
 .dropdown-icon.rotate {
   transform: rotate(180deg);
 }
+
+/* ===== Responsive: Tablet ≤1024px ===== */
+@media (max-width: 1024px) {
+  .user-dropdown {
+    width: 180px;
+  }
+}
+
+/* ===== Responsive: Tablet Portrait ≤768px ===== */
+@media (max-width: 768px) {
+  .user-dropdown {
+    right: -0.5rem;
+    width: 180px;
+  }
+
+  .dropdown-header p {
+    font-size: 0.8rem;
+  }
+
+  .dropdown-item {
+    font-size: 0.8rem;
+    padding: 0.5rem 0.75rem;
+  }
+}
+
+/* ===== Responsive: Mobile ≤480px ===== */
+@media (max-width: 480px) {
+  .user-dropdown {
+    right: -0.25rem;
+    width: 160px;
+  }
+
+  .dropdown-item {
+    font-size: 0.75rem;
+    padding: 0.4rem 0.625rem;
+  }
+
+  .dropdown-item span {
+    margin-left: 0.5rem;
+  }
+}

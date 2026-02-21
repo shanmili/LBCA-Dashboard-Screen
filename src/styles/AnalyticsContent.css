@@ -476,3 +476,181 @@
 .activity-time svg {
   margin-right: 0.25rem;
 }
+
+/* ===== Responsive: Tablet ≤1024px ===== */
+@media (max-width: 1024px) {
+  .analytics-container {
+    padding: 1rem;
+  }
+
+  /* KPI grid: 2x2 */
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+
+  .kpi-grid > * {
+    margin-right: 0;
+  }
+
+  /* Charts stack vertically */
+  .charts-grid {
+    flex-direction: column;
+  }
+
+  .chart-card {
+    margin-right: 0;
+    margin-bottom: 1rem;
+  }
+
+  .chart-card:last-child {
+    margin-bottom: 0;
+  }
+
+  .chart-card.wide {
+    flex: unset;
+  }
+
+  .chart-card:not(.wide) {
+    flex: unset;
+  }
+
+  /* Bottom grid stack */
+  .bottom-grid {
+    flex-direction: column;
+  }
+
+  .table-card {
+    flex: unset;
+    margin-right: 0;
+    margin-bottom: 1.5rem;
+  }
+
+  .activity-card {
+    flex: unset;
+  }
+
+  /* Filters wrap */
+  .filters-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .filter-container {
+    width: 100%;
+    box-sizing: border-box;
+  }
+}
+
+/* ===== Responsive: Tablet Portrait ≤768px ===== */
+@media (max-width: 768px) {
+  .analytics-container {
+    padding: 1rem;
+  }
+
+  /* KPI grid: single column */
+  .kpi-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .stat-card {
+    padding: 1rem;
+  }
+
+  .stat-value {
+    font-size: 1.25rem;
+  }
+
+  /* Chart container height adjustments */
+  .chart-container {
+    height: 12rem;
+  }
+
+  .pie-container {
+    height: 10rem;
+  }
+
+  /* Table scroll */
+  .table-wrapper {
+    overflow-x: auto;
+  }
+
+  .risk-table {
+    min-width: 500px;
+  }
+
+  /* Pie legend wrap */
+  .pie-legend {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .section-title {
+    font-size: 1.1rem;
+  }
+}
+
+/* ===== Responsive: Mobile ≤480px ===== */
+@media (max-width: 480px) {
+  .analytics-container {
+    padding: 0.75rem;
+  }
+
+  .stat-card {
+    padding: 0.875rem;
+  }
+
+  .stat-title {
+    font-size: 0.75rem;
+  }
+
+  .stat-value {
+    font-size: 1.125rem;
+  }
+
+  .chart-title {
+    font-size: 1rem;
+  }
+
+  .chart-container {
+    height: 10rem;
+  }
+
+  .pie-container {
+    height: 9rem;
+  }
+
+  .section-title {
+    font-size: 1rem;
+  }
+
+  .filter-label {
+    font-size: 0.75rem;
+    padding: 0.25rem 0.5rem;
+  }
+
+  .filter-select {
+    font-size: 0.75rem;
+    padding: 0.25rem 0.5rem;
+  }
+
+  .print-btn {
+    font-size: 0.7rem;
+    padding: 0.3rem 0.625rem;
+  }
+
+  .table-card,
+  .activity-card {
+    padding: 1rem;
+  }
+
+  .activity-text {
+    font-size: 0.8rem;
+  }
+
+  .activity-time {
+    font-size: 0.7rem;
+  }
+}

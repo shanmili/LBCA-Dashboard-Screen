@@ -6,6 +6,7 @@ const pageTitles = {
   pace: 'PACE Progress & Scores',
   risk: 'Early Warning Alerts',
   'student-profile': 'Student Profile',
+  'account-settings': 'Account Settings',
 };
 
 export default function useTopNavState(activeTab) {

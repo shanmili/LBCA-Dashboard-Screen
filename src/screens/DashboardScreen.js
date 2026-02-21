@@ -6,6 +6,7 @@ import StudentsPage from '../components/student/StudentsPage';
 import StudentProfile from '../components/student/StudentProfile';
 import PaceEncodingPage from '../components/dashboard/PaceEncodingPage';
 import EarlyWarningPage from '../components/dashboard/EarlyWarningPage';
+import AccountSettings from '../components/common/AccountSettings';
 import useDashboardState from '../hooks/useDashboardState';
 import '../styles/DashboardScreen.css';
 
@@ -25,6 +26,8 @@ export default function DashboardScreen({ onLogout }) {
         return <PaceEncodingPage />;
       case 'risk':
         return <EarlyWarningPage onNavigate={handleNavigate} />;
+      case 'account-settings':
+        return <AccountSettings onNavigate={handleNavigate} />;
       default:
         return <AnalyticsContent onNavigate={handleNavigate} />;
     }
@@ -32,15 +35,27 @@ export default function DashboardScreen({ onLogout }) {
 
   return (
     <div className="dashboard-container">
+      {/* Mobile overlay backdrop */}
+      <div 
+        className={`sidebar-overlay ${sidebarOpen ? 'visible' : ''}`} 
+        onClick={toggleSidebar} 
+      />
+
       {/* Pass activeTab and setActiveTab to Sidebar */}
       <Sidebar 
         isOpen={sidebarOpen} 
         activeTab={activeTab} 
-        onNavigate={setActiveTab} 
+        onNavigate={(tab) => {
+          setActiveTab(tab);
+          // Auto-close sidebar on mobile after navigation
+          if (window.innerWidth <= 768) {
+            toggleSidebar();
+          }
+        }} 
       />
 
       <div className="main-content">
-        <TopNav onToggle={toggleSidebar} onLogout={onLogout} activeTab={activeTab} />
+        <TopNav onToggle={toggleSidebar} onLogout={onLogout} activeTab={activeTab} onNavigate={handleNavigate} />
         
         <main className="content-area">
           {/* Call the function to render the correct page */}
