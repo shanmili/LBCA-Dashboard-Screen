@@ -1,4 +1,5 @@
 import React from 'react';
+import { Routes, Route, Navigate, useParams } from 'react-router-dom';
 import Sidebar from '../components/layout/Sidebar';
 import TopNav from '../components/layout/TopNav';
 import AnalyticsContent from '../components/dashboard/AnalyticsContent';
@@ -10,56 +11,46 @@ import AccountSettings from '../components/common/AccountSettings';
 import useDashboardState from '../hooks/useDashboardState';
 import '../styles/DashboardScreen.css';
 
-export default function DashboardScreen({ onLogout }) {
-  const { sidebarOpen, activeTab, setActiveTab, toggleSidebar, selectedStudentId, handleNavigate } = useDashboardState();
+// Wrapper reads :studentId from URL and passes it as a prop
+function StudentProfileWrapper({ onNavigate }) {
+  const { studentId } = useParams();
+  return <StudentProfile studentId={studentId} onNavigate={onNavigate} />;
+}
 
-  // This function decides what to show in the middle
-  const renderContent = () => {
-    switch (activeTab) {
-      case 'dashboard':
-        return <AnalyticsContent onNavigate={handleNavigate} />;
-      case 'students':
-        return <StudentsPage onNavigate={handleNavigate} />;
-      case 'student-profile':
-        return <StudentProfile studentId={selectedStudentId} onNavigate={handleNavigate} />;
-      case 'pace':
-        return <PaceEncodingPage />;
-      case 'risk':
-        return <EarlyWarningPage onNavigate={handleNavigate} />;
-      case 'account-settings':
-        return <AccountSettings onNavigate={handleNavigate} />;
-      default:
-        return <AnalyticsContent onNavigate={handleNavigate} />;
-    }
-  };
+export default function DashboardScreen({ onLogout }) {
+  const { sidebarOpen, activeTab, setActiveTab, toggleSidebar, handleNavigate } = useDashboardState();
 
   return (
     <div className="dashboard-container">
       {/* Mobile overlay backdrop */}
-      <div 
-        className={`sidebar-overlay ${sidebarOpen ? 'visible' : ''}`} 
-        onClick={toggleSidebar} 
+      <div
+        className={`sidebar-overlay ${sidebarOpen ? 'visible' : ''}`}
+        onClick={toggleSidebar}
       />
 
-      {/* Pass activeTab and setActiveTab to Sidebar */}
-      <Sidebar 
-        isOpen={sidebarOpen} 
-        activeTab={activeTab} 
+      <Sidebar
+        isOpen={sidebarOpen}
+        activeTab={activeTab}
         onNavigate={(tab) => {
           setActiveTab(tab);
-          // Auto-close sidebar on mobile after navigation
-          if (window.innerWidth <= 768) {
-            toggleSidebar();
-          }
-        }} 
+          if (window.innerWidth <= 768) toggleSidebar();
+        }}
       />
 
       <div className="main-content">
         <TopNav onToggle={toggleSidebar} onLogout={onLogout} activeTab={activeTab} onNavigate={handleNavigate} />
-        
+
         <main className="content-area">
-          {/* Call the function to render the correct page */}
-          {renderContent()}
+          <Routes>
+            <Route path="/dashboard" element={<AnalyticsContent onNavigate={handleNavigate} />} />
+            <Route path="/students" element={<StudentsPage onNavigate={handleNavigate} />} />
+            <Route path="/student/:studentId" element={<StudentProfileWrapper onNavigate={handleNavigate} />} />
+            <Route path="/pace" element={<PaceEncodingPage />} />
+            <Route path="/risk" element={<EarlyWarningPage onNavigate={handleNavigate} />} />
+            <Route path="/account-settings" element={<AccountSettings onNavigate={handleNavigate} />} />
+            {/* Default redirect */}
+            <Route path="*" element={<Navigate to="/dashboard" replace />} />
+          </Routes>
         </main>
       </div>
     </div>
