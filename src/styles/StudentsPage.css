@@ -22,6 +22,25 @@
   font-weight: bold;
 }
 
+.add-student-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 1rem;
+  background-color: #1F4788;
+  color: #fff;
+  border: none;
+  border-radius: 0.5rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.add-student-btn:hover {
+  background-color: #173a6e;
+}
+
 .header-subtitle {
   margin: 0.25rem 0 0 0;
   color: #6B7280;

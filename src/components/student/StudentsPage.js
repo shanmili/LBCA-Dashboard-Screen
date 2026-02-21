@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { Users, Search, Filter } from 'lucide-react';
+import { Users, Search, Filter, Plus } from 'lucide-react';
 import { studentsData } from '../../data/mockData';
+import StudentFormModal from '../common/StudentFormModal';
 import '../../styles/StudentsPage.css';
 
 const SCHOOL_YEARS = ['2025-2026', '2024-2025', '2023-2024'];
@@ -9,8 +10,10 @@ const StudentsPage = ({ onNavigate }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [sectionFilter, setSectionFilter] = useState('All');
   const [selectedSchoolYear, setSelectedSchoolYear] = useState('2025-2026');
+  const [showAddModal, setShowAddModal] = useState(false);
+  const [students, setStudents] = useState(studentsData);
 
-  const filteredStudents = studentsData.filter(student => {
+  const filteredStudents = students.filter(student => {
     const matchesSearch = student.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
                           student.id.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesSection = sectionFilter === 'All' || student.section === sectionFilter;
@@ -20,6 +23,18 @@ const StudentsPage = ({ onNavigate }) => {
   const getStatusBadgeClass = (status) => {
     if (status === 'Behind') return 'status-badge at-risk';
     return 'status-badge on-track';
+  };
+
+  const handleAddStudent = (formData) => {
+    const newId = 'S' + String(students.length + 1).padStart(3, '0');
+    const newStudent = {
+      ...formData,
+      id: newId,
+      riskDetails: [],
+    };
+    setStudents(prev => [...prev, newStudent]);
+    studentsData.push(newStudent);
+    setShowAddModal(false);
   };
 
   return (
@@ -69,6 +84,10 @@ const StudentsPage = ({ onNavigate }) => {
             <option value="Section C">Section C</option>
           </select>
         </div>
+        <button className="add-student-btn" onClick={() => setShowAddModal(true)}>
+          <Plus size={16} />
+          <span>Add Student</span>
+        </button>
       </div>
 
       <div className="students-table-container">
@@ -118,8 +137,16 @@ const StudentsPage = ({ onNavigate }) => {
       </div>
 
       <div className="students-footer">
-        <p>Showing {filteredStudents.length} of {studentsData.length} students</p>
+        <p>Showing {filteredStudents.length} of {students.length} students</p>
       </div>
+
+      {/* Add Student Modal */}
+      <StudentFormModal
+        isOpen={showAddModal}
+        onClose={() => setShowAddModal(false)}
+        onSave={handleAddStudent}
+        student={null}
+      />
     </div>
   );
 };

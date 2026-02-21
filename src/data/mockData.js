@@ -314,4 +314,28 @@ export const paceEncodingData = {
   },
 };
 
+// Student Form Constants
+export const studentSections = ['Section A', 'Section B', 'Section C'];
+export const studentGrades = ['Grade 7', 'Grade 8', 'Grade 9', 'Grade 10', 'Grade 11', 'Grade 12'];
+export const defaultSubjects = [
+  { name: 'Math', completed: 0, total: 6, testScore: 0, status: 'Behind' },
+  { name: 'English', completed: 0, total: 6, testScore: 0, status: 'Behind' },
+  { name: 'Science', completed: 0, total: 6, testScore: 0, status: 'Behind' },
+  { name: 'Filipino', completed: 0, total: 6, testScore: 0, status: 'Behind' },
+];
+export const emptyStudentForm = {
+  name: '',
+  section: 'Section A',
+  grade: 'Grade 10',
+  pacePercent: '',
+  attendance: '',
+  status: 'On Track',
+  riskLevel: 'Low',
+  factor: 'None',
+  secondaryRisk: 'None',
+  suggestedAction: 'None',
+  subjects: defaultSubjects.map(s => ({ ...s })),
+  attendanceSummary: { present: '', late: '', absent: '' },
+};
+
 

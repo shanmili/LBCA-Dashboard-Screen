@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { ArrowLeft, User, BookOpen, Calendar, AlertTriangle, Printer } from 'lucide-react';
+import { ArrowLeft, User, BookOpen, Calendar, AlertTriangle, Printer, Pencil } from 'lucide-react';
 import { studentsData } from '../../data/mockData';
 import RiskBadge from '../common/RiskBadge';
+import StudentFormModal from '../common/StudentFormModal';
 import ProfileOverviewTab from './ProfileOverviewTab';
 import ProfilePaceTab from './ProfilePaceTab';
 import ProfileAttendanceTab from './ProfileAttendanceTab';
@@ -17,8 +18,21 @@ const TABS = [
 
 const StudentProfile = ({ studentId, onNavigate }) => {
   const [activeTab, setActiveTab] = useState('overview');
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [studentData, setStudentData] = useState(() => studentsData.find(s => s.id === studentId));
 
-  const student = studentsData.find(s => s.id === studentId);
+  const student = studentData;
+
+  const handleSaveEdit = (formData) => {
+    const updated = { ...student, ...formData };
+    // Update the shared data source
+    const idx = studentsData.findIndex(s => s.id === student.id);
+    if (idx !== -1) {
+      studentsData[idx] = updated;
+    }
+    setStudentData(updated);
+    setShowEditModal(false);
+  };
 
   const handlePrint = () => {
     if (!student) return;
@@ -135,10 +149,16 @@ const StudentProfile = ({ studentId, onNavigate }) => {
           <ArrowLeft size={20} />
           <span>Back to Students</span>
         </button>
-        <button className="profile-print-btn" onClick={handlePrint} title="Print Student Overview">
-          <Printer size={16} />
-          <span>Print</span>
-        </button>
+        <div className="profile-header-actions">
+          <button className="profile-edit-btn" onClick={() => setShowEditModal(true)} title="Edit Student Profile">
+            <Pencil size={16} />
+            <span>Edit</span>
+          </button>
+          <button className="profile-print-btn" onClick={handlePrint} title="Print Student Overview">
+            <Printer size={16} />
+            <span>Print</span>
+          </button>
+        </div>
       </header>
 
       <div className="profile-card">
@@ -170,6 +190,14 @@ const StudentProfile = ({ studentId, onNavigate }) => {
 
         {renderTab()}
       </div>
+
+      {/* Edit Student Modal */}
+      <StudentFormModal
+        isOpen={showEditModal}
+        onClose={() => setShowEditModal(false)}
+        onSave={handleSaveEdit}
+        student={student}
+      />
     </div>
   );
 };
