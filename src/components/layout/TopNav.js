@@ -6,10 +6,12 @@ import {
   ChevronDown, 
   LogOut, 
   User, 
+  Sun,
   Settings 
 } from 'lucide-react';
 import useTopNavState from '../../hooks/useTopNavState';
 import '../../styles/TopNav.css'; 
+import Theme from '../common/Theme';
 
 const TopNav = ({ onToggle, onLogout, activeTab }) => {
   const { isDropdownOpen, toggleDropdown, closeDropdown, pageTitle } = useTopNavState(activeTab);
@@ -59,7 +61,7 @@ const TopNav = ({ onToggle, onLogout, activeTab }) => {
                 <User size={16} /> <span>Profile</span>
               </button>
               <button className="dropdown-item">
-                <Settings size={16} /> <span>Settings</span>
+                  <Sun size={16} /> <span>Theme</span> <Theme />
               </button>
               <hr />
               <button className="dropdown-item logout" onClick={() => { closeDropdown(); if (onLogout) onLogout(); }}>

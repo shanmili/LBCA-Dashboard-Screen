@@ -11,10 +11,10 @@
   right: 0;
   margin-top: 0.5rem;
   width: 200px;
-  background-color: white;
-  border: 1px solid #E5E7EB;
+  background-color: var(--bg-primary);
+  border: 1px solid var(--border-color);
   border-radius: 0.5rem;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  box-shadow: var(--shadow-dropdown);
   z-index: 50; /* Ensures it sits on top of everything else */
   padding: 0.5rem 0;
 }
@@ -23,14 +23,14 @@
 .dropdown-header {
   padding: 0.5rem 1rem;
   font-size: 0.875rem;
-  color: #374151;
+  color: var(--text-dark);
 }
 
 /* Horizontal line */
 .user-dropdown hr {
   margin: 0.25rem 0;
   border: 0;
-  border-top: 1px solid #F3F4F6;
+  border-top: 1px solid var(--border-light);
 }
 
 /* The buttons inside the menu */
@@ -40,7 +40,7 @@
   width: 100%;
   padding: 0.5rem 1rem;
   font-size: 0.875rem;
-  color: #4B5563;
+  color: var(--text-muted);
   background: none;
   border: none;
   cursor: pointer;
@@ -52,14 +52,14 @@
 }
 
 .dropdown-item:hover {
-  background-color: #F3F4F6;
-  color: #1F2937;
+  background-color: var(--bg-tertiary);
+  color: var(--text-primary);
 }
 
 /* Special style for Log Out (Red color on hover) */
 .dropdown-item.logout:hover {
-  background-color: #FEF2F2;
-  color: #EF4444;
+  background-color: var(--danger-bg);
+  color: var(--danger);
 }
 
 /* Animation for the arrow icon */
