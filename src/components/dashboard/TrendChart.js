@@ -10,16 +10,16 @@ import {
     Legend 
 } from 'recharts';
 
-const TrendChart = ({ data }) => {
+const TrendChart = ({ data, title = "PACE Completion Trend", yAxisLabel = "Completion %" }) => {
   return (
     <article className="chart-card wide">
-      <h3 className="chart-title">Academic Trends Comparison</h3>
+      <h3 className="chart-title">{title}</h3>
       <figure className="chart-container">
         <ResponsiveContainer width="100%" height="100%">
           <LineChart data={data}>
             <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#E5E7EB" />
             <XAxis dataKey="name" stroke="#9CA3AF" tick={{fontSize: 12}} />
-            <YAxis domain={[60, 100]} stroke="#9CA3AF" tick={{fontSize: 12}} />
+            <YAxis domain={[0, 100]} stroke="#9CA3AF" tick={{fontSize: 12}} label={{ value: yAxisLabel, angle: -90, position: 'insideLeft', style: { textAnchor: 'middle', fontSize: 11, fill: '#9CA3AF' } }} />
             <Tooltip contentStyle={{ backgroundColor: '#fff', borderRadius: '8px', border: '1px solid #E5E7EB' }} />
             <Legend wrapperStyle={{paddingTop: '10px'}}/>
             <Line type="monotone" dataKey="SectionA" stroke="#1F4788" strokeWidth={3} dot={{r: 4}} name="Section A" />
@@ -33,5 +33,3 @@ const TrendChart = ({ data }) => {
 };
 
 export default TrendChart;
-
-//pang trend chart ni

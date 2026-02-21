@@ -61,6 +61,31 @@
   cursor: pointer;
 }
 
+/* Print Button */
+.print-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.375rem 0.875rem;
+  margin-left: 0.5rem;
+  background-color: #1F4788;
+  color: white;
+  border: none;
+  border-radius: 0.375rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.print-btn:hover {
+  background-color: #163563;
+}
+
+.print-btn svg {
+  flex-shrink: 0;
+}
+
 /* KPI Cards */
 .kpi-grid {
   display: flex;

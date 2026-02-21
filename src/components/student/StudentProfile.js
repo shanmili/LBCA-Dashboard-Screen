@@ -1,0 +1,177 @@
+import React, { useState } from 'react';
+import { ArrowLeft, User, BookOpen, Calendar, AlertTriangle, Printer } from 'lucide-react';
+import { studentsData } from '../../data/mockData';
+import RiskBadge from '../common/RiskBadge';
+import ProfileOverviewTab from './ProfileOverviewTab';
+import ProfilePaceTab from './ProfilePaceTab';
+import ProfileAttendanceTab from './ProfileAttendanceTab';
+import ProfileRiskTab from './ProfileRiskTab';
+import '../../styles/StudentProfile.css';
+
+const TABS = [
+  { id: 'overview', label: 'Overview', icon: User },
+  { id: 'pace', label: 'PACE Progress', icon: BookOpen },
+  { id: 'attendance', label: 'Attendance', icon: Calendar },
+  { id: 'risk', label: 'Risk Details', icon: AlertTriangle },
+];
+
+const StudentProfile = ({ studentId, onNavigate }) => {
+  const [activeTab, setActiveTab] = useState('overview');
+
+  const student = studentsData.find(s => s.id === studentId);
+
+  const handlePrint = () => {
+    if (!student) return;
+    const subjectsRows = (student.subjects || []).map(s =>
+      `<tr>
+        <td>${s.name}</td>
+        <td>${s.completed}/${s.totalPaces}</td>
+        <td>${s.avgTestScore}%</td>
+      </tr>`
+    ).join('');
+
+    const win = window.open('', '_blank');
+    win.document.write(`
+      <html>
+        <head>
+          <title>Student Profile — ${student.name}</title>
+          <style>
+            body { font-family: Arial, sans-serif; padding: 2rem; color: #1F2937; }
+            h1 { font-size: 1.25rem; margin-bottom: 0.25rem; }
+            .meta { color: #6B7280; font-size: 0.85rem; margin-bottom: 1.5rem; }
+            .stats { display: flex; gap: 1rem; margin-bottom: 1.5rem; }
+            .stat { flex: 1; border: 1px solid #E5E7EB; border-radius: 0.5rem; padding: 1rem; text-align: center; }
+            .stat-val { font-size: 1.5rem; font-weight: bold; margin: 0; }
+            .stat-lbl { font-size: 0.8rem; color: #6B7280; }
+            .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem; }
+            .info-card { border: 1px solid #E5E7EB; border-radius: 0.5rem; padding: 1rem; }
+            .info-card h4 { margin: 0 0 0.75rem 0; font-size: 0.95rem; }
+            .info-row { display: flex; justify-content: space-between; padding: 0.35rem 0; font-size: 0.85rem; border-bottom: 1px solid #F3F4F6; }
+            .info-row:last-child { border-bottom: none; }
+            .lbl { color: #6B7280; }
+            table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+            th, td { border: 1px solid #E5E7EB; padding: 0.5rem; text-align: left; }
+            th { background: #F9FAFB; font-weight: 600; }
+            .risk-badge { display: inline-block; padding: 2px 10px; border-radius: 1rem; font-size: 0.8rem; font-weight: 600; }
+            .risk-high { background: #FEE2E2; color: #DC2626; }
+            .risk-medium { background: #FEF3C7; color: #D97706; }
+            .risk-low { background: #D1FAE5; color: #059669; }
+            @media print { body { -webkit-print-color-adjust: exact; print-color-adjust: exact; } }
+          </style>
+        </head>
+        <body>
+          <h1>${student.name}</h1>
+          <p class="meta">${student.section} &bull; ${student.grade || 'N/A'} &bull; ID: ${student.id} &bull; Printed: ${new Date().toLocaleDateString()}</p>
+
+          <div class="stats">
+            <div class="stat"><p class="stat-val">${student.pacePercent}%</p><p class="stat-lbl">PACE Completion</p></div>
+            <div class="stat"><p class="stat-val">${student.attendance}%</p><p class="stat-lbl">Attendance</p></div>
+            <div class="stat"><p class="stat-val"><span class="risk-badge risk-${student.riskLevel.toLowerCase()}">${student.riskLevel}</span></p><p class="stat-lbl">Risk Level</p></div>
+          </div>
+
+          <div class="info-grid">
+            <div class="info-card">
+              <h4>Student Information</h4>
+              <div class="info-row"><span class="lbl">Status</span><span>${student.status}</span></div>
+              <div class="info-row"><span class="lbl">Primary Factor</span><span>${student.factor || 'N/A'}</span></div>
+              ${student.secondaryRisk && student.secondaryRisk !== 'None' ? `<div class="info-row"><span class="lbl">Secondary Factor</span><span>${student.secondaryRisk}</span></div>` : ''}
+              ${student.suggestedAction && student.suggestedAction !== 'None' ? `<div class="info-row"><span class="lbl">Suggested Action</span><span>${student.suggestedAction}</span></div>` : ''}
+            </div>
+            ${student.attendanceSummary ? `
+            <div class="info-card">
+              <h4>Attendance Summary</h4>
+              <div class="info-row"><span class="lbl">Present</span><span>${student.attendanceSummary.present} days</span></div>
+              <div class="info-row"><span class="lbl">Absent</span><span>${student.attendanceSummary.absent} days</span></div>
+              <div class="info-row"><span class="lbl">Late</span><span>${student.attendanceSummary.late} days</span></div>
+              <div class="info-row"><span class="lbl">Excused</span><span>${student.attendanceSummary.excused} days</span></div>
+            </div>` : ''}
+          </div>
+
+          ${subjectsRows ? `
+          <h4 style="margin-bottom:0.5rem;">PACE Subjects</h4>
+          <table>
+            <thead><tr><th>Subject</th><th>Completed / Total</th><th>Avg Score</th></tr></thead>
+            <tbody>${subjectsRows}</tbody>
+          </table>` : ''}
+        </body>
+      </html>
+    `);
+    win.document.close();
+    win.focus();
+    win.print();
+    win.close();
+  };
+
+  if (!student) {
+    return (
+      <div className="student-profile">
+        <header className="profile-header">
+          <button className="back-button" onClick={() => onNavigate('students')}>
+            <ArrowLeft size={20} />
+            <span>Back to Students</span>
+          </button>
+        </header>
+        <div className="profile-card">
+          <div className="no-data-message">Student not found.</div>
+        </div>
+      </div>
+    );
+  }
+
+  const renderTab = () => {
+    switch (activeTab) {
+      case 'overview':    return <ProfileOverviewTab student={student} />;
+      case 'pace':        return <ProfilePaceTab student={student} />;
+      case 'attendance':  return <ProfileAttendanceTab student={student} />;
+      case 'risk':        return <ProfileRiskTab student={student} />;
+      default:            return null;
+    }
+  };
+
+  return (
+    <div className="student-profile">
+      <header className="profile-header">
+        <button className="back-button" onClick={() => onNavigate('students')}>
+          <ArrowLeft size={20} />
+          <span>Back to Students</span>
+        </button>
+        <button className="profile-print-btn" onClick={handlePrint} title="Print Student Overview">
+          <Printer size={16} />
+          <span>Print</span>
+        </button>
+      </header>
+
+      <div className="profile-card">
+        <div className="profile-info">
+          <div className="avatar">
+            <User size={40} />
+          </div>
+          <div className="profile-details">
+            <h2>{student.name}</h2>
+            <p>{student.section} • {student.grade} • ID: {student.id}</p>
+          </div>
+          <div className="profile-status">
+            <RiskBadge level={student.riskLevel} />
+          </div>
+        </div>
+
+        <nav className="profile-tabs">
+          {TABS.map(tab => (
+            <button
+              key={tab.id}
+              className={`tab-button ${activeTab === tab.id ? 'active' : ''}`}
+              onClick={() => setActiveTab(tab.id)}
+            >
+              <tab.icon size={16} />
+              <span>{tab.label}</span>
+            </button>
+          ))}
+        </nav>
+
+        {renderTab()}
+      </div>
+    </div>
+  );
+};
+
+export default StudentProfile;

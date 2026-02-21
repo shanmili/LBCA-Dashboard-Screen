@@ -70,7 +70,7 @@ const StudentsPage = ({ onNavigate }) => {
           </select>
         </div>
       </div>
-      
+
       <div className="students-table-container">
         <table className="students-list-table">
           <thead>
@@ -99,7 +99,7 @@ const StudentsPage = ({ onNavigate }) => {
                     </span>
                   </td>
                   <td>
-                    <button 
+                    <button
                       className="view-button"
                       onClick={() => onNavigate('student-profile', student.id)}
                     >
@@ -125,6 +125,3 @@ const StudentsPage = ({ onNavigate }) => {
 };
 
 export default StudentsPage;
-
-
-

@@ -14,11 +14,9 @@ import '../../styles/TopNav.css';
 const pageTitles = {
   dashboard: 'Analytics Dashboard',
   students: 'Students',
-  grades: 'Grades & Records',
-  attendance: 'Attendance Module',
-  risk: 'AI Risk Prediction',
-  messages: 'Messages',
-  settings: 'Settings',
+  pace: 'PACE Progress & Scores',
+  risk: 'Early Warning Alerts',
+  'student-profile': 'Student Profile',
 };
 
 const TopNav = ({ onToggle, onLogout, activeTab }) => {

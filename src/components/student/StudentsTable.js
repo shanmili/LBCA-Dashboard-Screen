@@ -25,10 +25,11 @@ const StudentsTable = ({ students, filterValue, onFilterChange, onNavigate }) =>
         <table className="risk-table">
           <thead>
             <tr>
-              <th>Name</th>
+              <th>Student</th>
               <th>Section</th>
+              <th>PACE %</th>
               <th>Risk</th>
-              <th>Factor</th>
+              <th>Primary Factor</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -37,16 +38,17 @@ const StudentsTable = ({ students, filterValue, onFilterChange, onNavigate }) =>
               <tr key={s.id}>
                 <td className="student-name">{s.name}</td>
                 <td className="student-section">{s.section}</td>
+                <td className="pace-percent">{s.pacePercent}%</td>
                 <td><RiskBadge level={s.riskLevel} /></td>
                 <td className="risk-factor">{s.factor}</td>
                 <td>
-                  <button onClick={() => onNavigate('risk', s.id)} className="details-button">
-                    Details
+                  <button onClick={() => onNavigate('student-profile', s.id)} className="details-button">
+                    View
                   </button>
                 </td>
               </tr>
             )) : (
-              <tr><td colSpan="5" className="no-data">No students found.</td></tr>
+              <tr><td colSpan="6" className="no-data">No at-risk students found.</td></tr>
             )}
           </tbody>
         </table>
@@ -56,5 +58,3 @@ const StudentsTable = ({ students, filterValue, onFilterChange, onNavigate }) =>
 };
 
 export default StudentsTable;
-
-//for students table ni

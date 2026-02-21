@@ -4,10 +4,9 @@ import {
   LayoutDashboard,
   Users,
   GraduationCap,
-  CalendarCheck,
   AlertTriangle,
-  MessageSquare,
-  Settings
+  BookOpen,
+  Bell
 } from 'lucide-react';
 
 // Accept activeTab and onNavigate as props
@@ -35,27 +34,18 @@ const Sidebar = ({ isOpen, activeTab, onNavigate }) => {
         />
         <SidebarItem 
           icon={GraduationCap} 
-          label="Grades & Records" 
-          active={activeTab === 'grades'} 
-          onClick={() => onNavigate('grades')}
+          label="PACE Progress & Scores" 
+          active={activeTab === 'pace'} 
+          onClick={() => onNavigate('pace')}
           collapsed={!isOpen} 
         />
-        
         <SidebarItem 
-          icon={AlertTriangle} 
-          label="AI Risk Prediction" 
+          icon={Bell} 
+          label="Early Warning Alerts" 
           active={activeTab === 'risk'} 
           onClick={() => onNavigate('risk')}
           collapsed={!isOpen} 
         />
-        <SidebarItem 
-          icon={MessageSquare} 
-          label="Messages" 
-          active={activeTab === 'messages'} 
-          onClick={() => onNavigate('messages')}
-          collapsed={!isOpen} 
-        />
-        
       </section>
     </nav>
   );

@@ -1,34 +1,41 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Sidebar from '../components/layout/Sidebar';
 import TopNav from '../components/layout/TopNav';
 import AnalyticsContent from '../components/dashboard/AnalyticsContent';
-import StudentsPage from '../components/dashboard/StudentsPage';
-import UnderMaintenance from '../components/common/UnderMaintenance'; 
+import StudentsPage from '../components/student/StudentsPage';
+import StudentProfile from '../components/student/StudentProfile';
+import PaceEncodingPage from '../components/dashboard/PaceEncodingPage';
+import EarlyWarningPage from '../components/dashboard/EarlyWarningPage';
 import useDashboardState from '../hooks/useDashboardState';
 import '../styles/DashboardScreen.css';
 
 export default function DashboardScreen({ onLogout }) {
   const { sidebarOpen, activeTab, setActiveTab, toggleSidebar } = useDashboardState();
+  const [selectedStudentId, setSelectedStudentId] = useState(null);
+
+  // Navigation handler that supports student profile navigation
+  const handleNavigate = (tab, studentId = null) => {
+    if (tab === 'student-profile' && studentId) {
+      setSelectedStudentId(studentId);
+    }
+    setActiveTab(tab);
+  };
 
   // This function decides what to show in the middle
   const renderContent = () => {
     switch (activeTab) {
       case 'dashboard':
-        return <AnalyticsContent onNavigate={setActiveTab} />;
+        return <AnalyticsContent onNavigate={handleNavigate} />;
       case 'students':
-        return <StudentsPage />;
-      case 'grades':
-        return <UnderMaintenance title="Grades & Records" />;
-      case 'attendance':
-        return <UnderMaintenance title="Attendance Module" />;
+        return <StudentsPage onNavigate={handleNavigate} />;
+      case 'student-profile':
+        return <StudentProfile studentId={selectedStudentId} onNavigate={handleNavigate} />;
+      case 'pace':
+        return <PaceEncodingPage />;
       case 'risk':
-        return <UnderMaintenance title="AI Risk Prediction" />;
-      case 'messages':
-        return <UnderMaintenance title="Messages" />;
-      case 'settings':
-        return <UnderMaintenance title="Settings" />;
+        return <EarlyWarningPage onNavigate={handleNavigate} />;
       default:
-        return <AnalyticsContent />;
+        return <AnalyticsContent onNavigate={handleNavigate} />;
     }
   };
 
