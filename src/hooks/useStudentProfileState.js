@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { studentsData } from '../data/mockData';
 
 const TABS = [
@@ -12,6 +12,12 @@ export default function useStudentProfileState(studentId) {
   const [activeTab, setActiveTab] = useState('overview');
   const [showEditModal, setShowEditModal] = useState(false);
   const [studentData, setStudentData] = useState(() => studentsData.find(s => s.id === studentId));
+
+  useEffect(() => {
+    setStudentData(studentsData.find(s => s.id === studentId));
+    setActiveTab('overview');
+    setShowEditModal(false);
+  }, [studentId]);
 
   const student = studentData;
 
