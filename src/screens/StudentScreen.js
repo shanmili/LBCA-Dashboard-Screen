@@ -2,11 +2,8 @@ import React from 'react';
 import { Routes, Route, Navigate, useParams } from 'react-router-dom';
 import Sidebar from '../components/layout/Sidebar';
 import TopNav from '../components/layout/TopNav';
-import AnalyticsContent from '../components/dashboard/AnalyticsContent';
 import StudentsPage from '../components/student/StudentsPage';
 import StudentProfile from '../components/student/StudentProfile';
-import PaceEncodingPage from '../components/dashboard/PaceEncodingPage';
-import EarlyWarningPage from '../components/dashboard/EarlyWarningPage';
 import AccountSettings from '../components/common/AccountSettings';
 import useDashboardState from '../hooks/useDashboardState';
 import '../styles/DashboardScreen.css';
@@ -17,7 +14,7 @@ function StudentProfileWrapper({ onNavigate }) {
   return <StudentProfile studentId={studentId} onNavigate={onNavigate} />;
 }
 
-export default function DashboardScreen({ onLogout }) {
+export default function StudentScreen({ onLogout }) {
   const { sidebarOpen, activeTab, setActiveTab, toggleSidebar, handleNavigate } = useDashboardState();
 
   return (
@@ -32,11 +29,7 @@ export default function DashboardScreen({ onLogout }) {
         isOpen={sidebarOpen}
         activeTab={activeTab}
         onNavigate={(tab) => {
-<<<<<<< HEAD
-          setActiveTab(tab);
-=======
           handleNavigate(tab);
->>>>>>> origin/main
           if (window.innerWidth <= 768) toggleSidebar();
         }}
       />
@@ -46,14 +39,11 @@ export default function DashboardScreen({ onLogout }) {
 
         <main className="content-area">
           <Routes>
-            <Route path="/dashboard" element={<AnalyticsContent onNavigate={handleNavigate} />} />
             <Route path="/students" element={<StudentsPage onNavigate={handleNavigate} />} />
             <Route path="/student/:studentId" element={<StudentProfileWrapper onNavigate={handleNavigate} />} />
-            <Route path="/pace" element={<PaceEncodingPage />} />
-            <Route path="/risk" element={<EarlyWarningPage onNavigate={handleNavigate} />} />
             <Route path="/account-settings" element={<AccountSettings onNavigate={handleNavigate} />} />
             {/* Default redirect */}
-            <Route path="*" element={<Navigate to="/dashboard" replace />} />
+            <Route path="*" element={<Navigate to="/students" replace />} />
           </Routes>
         </main>
       </div>
