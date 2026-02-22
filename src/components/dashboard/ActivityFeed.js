@@ -1,13 +1,16 @@
 import React from 'react';
 import { Clock, Inbox } from 'lucide-react';
+import { useNotifications } from '../../context/NotificationContext';
 
-const ActivityFeed = ({ activities }) => {
+const ActivityFeed = () => {
+  const { userActivity } = useNotifications();
+
   return (
     <aside className="activity-card">
       <h3 className="activity-title">Recent Activity</h3>
-      {activities && activities.length > 0 ? (
+      {userActivity && userActivity.length > 0 ? (
         <ul className="activity-list">
-          {activities.map(a => (
+          {userActivity.map(a => (
             <li key={a.id} className="activity-item">
               <div className="activity-dot"></div>
               <div>

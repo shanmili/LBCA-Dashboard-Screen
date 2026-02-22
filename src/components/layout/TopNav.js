@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { 
   Menu, 
   Search, 
@@ -7,14 +7,41 @@ import {
   LogOut, 
   User, 
   Sun,
-  Settings 
+  AlertTriangle,
+  AlertCircle,
+  CalendarX,
+  CheckCheck,
 } from 'lucide-react';
 import useTopNavState from '../../hooks/useTopNavState';
+import { useNotifications } from '../../context/NotificationContext';
 import '../../styles/TopNav.css'; 
 import Theme from '../common/Theme';
 
+const severityIcon = (type) => {
+  if (type === 'at-risk') return <AlertTriangle size={14} className="notif-icon notif-icon--high" />;
+  if (type === 'risk') return <AlertCircle size={14} className="notif-icon notif-icon--medium" />;
+  if (type === 'attendance') return <CalendarX size={14} className="notif-icon notif-icon--high" />;
+  return <AlertCircle size={14} className="notif-icon notif-icon--low" />;
+};
+
 const TopNav = ({ onToggle, onLogout, activeTab, onNavigate }) => {
   const { isDropdownOpen, toggleDropdown, closeDropdown, pageTitle } = useTopNavState(activeTab);
+  const { notifications, unreadCount, markAllRead, markRead } = useNotifications();
+
+  const [notifOpen, setNotifOpen] = useState(false);
+  const notifRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (notifRef.current && !notifRef.current.contains(e.target)) {
+        setNotifOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  const toggleNotif = () => setNotifOpen((prev) => !prev);
 
   return (
     <header className="top-nav">
@@ -31,10 +58,59 @@ const TopNav = ({ onToggle, onLogout, activeTab, onNavigate }) => {
           <Search className="search-icon" />
         </div>
         
-        <button className="notification-button">
-          <Bell size={20} />
-          <span className="notification-badge"></span>
-        </button>
+        {/* Notification Bell */}
+        <div className="notif-wrapper" ref={notifRef}>
+          <button className="notification-button" onClick={toggleNotif}>
+            <Bell size={20} />
+            {unreadCount > 0 && (
+              <span className="notification-badge">{unreadCount > 9 ? '9+' : unreadCount}</span>
+            )}
+          </button>
+
+          {notifOpen && (
+            <div className="notif-dropdown">
+              <div className="notif-header">
+                <span className="notif-header__title">
+                  Notifications
+                  {unreadCount > 0 && <span className="notif-header__count">{unreadCount} new</span>}
+                </span>
+                {unreadCount > 0 && (
+                  <button className="notif-mark-all" onClick={markAllRead}>
+                    <CheckCheck size={13} /> Mark all read
+                  </button>
+                )}
+              </div>
+
+              <ul className="notif-list">
+                {notifications.length === 0 ? (
+                  <li className="notif-empty">No notifications</li>
+                ) : (
+                  notifications.map((n) => (
+                    <li
+                      key={n.id}
+                      className={`notif-item ${!n.read ? 'notif-item--unread' : ''} ${n.studentId ? 'notif-item--clickable' : ''}`}
+                      onClick={() => {
+                        markRead(n.id);
+                        if (n.studentId && onNavigate) {
+                          setNotifOpen(false);
+                          onNavigate('student-profile', n.studentId);
+                        }
+                      }}
+                    >
+                      <div className="notif-item__icon">{severityIcon(n.type)}</div>
+                      <div className="notif-item__body">
+                        <p className="notif-item__title">{n.title}</p>
+                        <p className="notif-item__msg">{n.message}</p>
+                        <span className="notif-item__time">{n.time}</span>
+                      </div>
+                      {!n.read && <span className="notif-item__dot" />}
+                    </li>
+                  ))
+                )}
+              </ul>
+            </div>
+          )}
+        </div>
 
         {/* User Profile Container with Click Event */}
         <div className="user-menu-container">
@@ -77,4 +153,4 @@ const TopNav = ({ onToggle, onLogout, activeTab, onNavigate }) => {
 
 export default TopNav;
 
-//Top Navigation 
+//Top Navigation

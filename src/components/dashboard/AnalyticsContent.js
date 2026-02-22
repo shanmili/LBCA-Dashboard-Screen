@@ -132,7 +132,7 @@ export default function AnalyticsContent({ onNavigate = () => {} }) {
           onFilterChange={setRiskFilter}
           onNavigate={onNavigate}
         />
-        <ActivityFeed activities={activityFeed} />
+        <ActivityFeed />
       </section>
     </section>
   );

@@ -176,7 +176,7 @@
   position: absolute;
   left: 0.75rem;
   top: 50%;
-  margin-top: -8px;
+  transform: translateY(-50%);
   height: 1rem;
   width: 1rem;
   color: var(--text-tertiary);
@@ -199,13 +199,24 @@
 
 .notification-badge {
   position: absolute;
-  top: 0.25rem;
-  right: 0.25rem;
-  height: 0.5rem;
-  width: 0.5rem;
+  top: 2px;
+  right: 2px;
+  min-width: 17px;
+  height: 17px;
+  padding: 0 4px;
   background-color: var(--danger);
-  border-radius: 50%;
+  color: #fff;
+  font-size: 0.65rem;
+  font-weight: 700;
+  line-height: 13px;
+  text-align: center;
+  border-radius: 999px;
   border: 2px solid var(--bg-primary);
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
 }
 
 .user-profile {
