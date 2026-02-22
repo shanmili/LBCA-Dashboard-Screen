@@ -32,11 +32,7 @@ export default function DashboardScreen({ onLogout }) {
         isOpen={sidebarOpen}
         activeTab={activeTab}
         onNavigate={(tab) => {
-<<<<<<< HEAD
           setActiveTab(tab);
-=======
-          handleNavigate(tab);
->>>>>>> origin/main
           if (window.innerWidth <= 768) toggleSidebar();
         }}
       />
