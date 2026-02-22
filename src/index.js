@@ -10,13 +10,9 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-<<<<<<< HEAD
       <NotificationProvider>
         <App />
       </NotificationProvider>
-=======
-      <App />
->>>>>>> origin/main
     </BrowserRouter>
   </React.StrictMode>
 );
