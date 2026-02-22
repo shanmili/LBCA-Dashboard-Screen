@@ -210,16 +210,18 @@
   height: 12rem;
   width: 100%;
   position: relative;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .pie-center {
   position: absolute;
   top: 50%;
   left: 50%;
-  margin-left: -40px;
-  margin-top: -30px;
+  transform: translate(-50%, -50%);
   text-align: center;
-  width: 80px;
 }
 
 .pie-value {

@@ -107,10 +107,6 @@ const AccountSettings = ({ onNavigate }) => {
               <span className="badge badgeGreen">● Active</span>
             </div>
             <div className="infoRow">
-              <span className="infoKey">Plan</span>
-              <span className="badge badgeBlue">● Pro</span>
-            </div>
-            <div className="infoRow">
               <span className="infoKey">Member Since</span>
               <span className="infoVal">January 12, 2024</span>
             </div>

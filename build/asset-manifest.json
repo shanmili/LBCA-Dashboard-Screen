@@ -1,5 +1,6 @@
 {
   "files": {
+<<<<<<< HEAD
     "main.css": "/LBCA-Monitoring-System/static/css/main.b432038b.css",
     "main.js": "/LBCA-Monitoring-System/static/js/main.8f35b3c1.js",
     "static/js/453.329d7767.chunk.js": "/LBCA-Monitoring-System/static/js/453.329d7767.chunk.js",
@@ -11,5 +12,18 @@
   "entrypoints": [
     "static/css/main.b432038b.css",
     "static/js/main.8f35b3c1.js"
+=======
+    "main.css": "/LBCA-Monitoring-System/static/css/main.b4b4cc96.css",
+    "main.js": "/LBCA-Monitoring-System/static/js/main.dec2314a.js",
+    "static/js/453.329d7767.chunk.js": "/LBCA-Monitoring-System/static/js/453.329d7767.chunk.js",
+    "index.html": "/LBCA-Monitoring-System/index.html",
+    "main.b4b4cc96.css.map": "/LBCA-Monitoring-System/static/css/main.b4b4cc96.css.map",
+    "main.dec2314a.js.map": "/LBCA-Monitoring-System/static/js/main.dec2314a.js.map",
+    "453.329d7767.chunk.js.map": "/LBCA-Monitoring-System/static/js/453.329d7767.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.b4b4cc96.css",
+    "static/js/main.dec2314a.js"
+>>>>>>> origin/main
   ]
 }
