@@ -314,6 +314,67 @@ export const paceEncodingData = {
   },
 };
 
+// Teacher Accounts Data - Simple accounts without personal info
+export const teachersData = [
+  {
+    id: 'T001',
+    username: 'teacher1',
+    password: 'temp123', // Temporary password
+    status: 'active',
+    lastLogin: '2024-02-26 08:30 AM',
+    createdAt: '2023-06-15',
+    hasCustomized: false // Teacher hasn't customized profile yet
+  },
+  {
+    id: 'T002',
+    username: 'Juan Marcos Mendoza',
+    password: 'temp123',
+    status: 'active',
+    lastLogin: '2024-02-26 09:15 AM',
+    createdAt: '2023-06-15',
+    hasCustomized: true // Teacher has already customized
+  },
+  {
+    id: 'T003',
+    username: 'teacher3',
+    password: 'temp123',
+    status: 'active',
+    lastLogin: '2024-02-25 02:30 PM',
+    createdAt: '2023-08-20',
+    hasCustomized: false
+  },
+  {
+    id: 'T004',
+    username: 'teacher4',
+    password: 'temp123',
+    status: 'active',
+    lastLogin: '2024-02-20 11:45 AM',
+    createdAt: '2023-09-10',
+    hasCustomized: false
+  },
+  {
+    id: 'T005',
+    username: 'Michelle Nepomuceno Garcia',
+    password: 'temp123',
+    status: 'active',
+    lastLogin: '2024-02-26 10:00 AM',
+    createdAt: '2023-07-05',
+    hasCustomized: true
+  },
+  {
+    id: 'T006',
+    username: 'teacher6',
+    password: 'temp123',
+    status: 'active',
+    lastLogin: '2024-02-15 01:20 PM',
+    createdAt: '2023-10-12',
+    hasCustomized: false
+  }
+];
+
+// Account status options
+export const accountStatuses = ['active', 'inactive'];
+
 // Student Form Constants
 export const studentSections = ['Section A', 'Section B', 'Section C'];
 export const studentGrades = ['Grade 7', 'Grade 8', 'Grade 9', 'Grade 10', 'Grade 11', 'Grade 12'];

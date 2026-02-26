@@ -1,5 +1,6 @@
 import React from 'react';
-import SidebarItem from './SidebarItem.jsx';
+import SidebarItem from './SidebarItem';
+import Logo from '../common/Logo';
 import '../../styles/layout/Sidebar.css';
 import {
   LayoutDashboard,
@@ -8,11 +9,18 @@ import {
   AlertTriangle,
 } from 'lucide-react';
 
-const Sidebar = ({ isOpen, activeTab, onNavigate }) => {
+const Sidebar = ({ isOpen, activeTab, onNavigate, userRole = 'teacher', adminPhoto }) => {
+  const isAdmin = userRole === 'admin';
+  const isTeacher = userRole === 'teacher';
+
   return (
     <aside className={`sidebar ${isOpen ? 'sidebar-open' : 'sidebar-collapsed'}`}>
       <div className="sidebar-header">
-        <span className="sidebar-logo">{isOpen ? 'LBCA ADMIN' : 'LBCA'}</span>
+        <Logo 
+          adminPhoto={adminPhoto} 
+          adminInitials="AD"
+          showText={isOpen}
+        />
       </div>
       
       <nav className="sidebar-menu">
@@ -30,13 +38,27 @@ const Sidebar = ({ isOpen, activeTab, onNavigate }) => {
           onClick={() => onNavigate('students')}
           collapsed={!isOpen} 
         />
-        <SidebarItem 
-          icon={GraduationCap} 
-          label="PACE Progress" 
-          active={activeTab === 'pace'} 
-          onClick={() => onNavigate('pace')}
-          collapsed={!isOpen} 
-        />
+        
+        {isAdmin && (
+          <SidebarItem 
+            icon={Users} 
+            label="Teachers" 
+            active={activeTab === 'teachers'} 
+            onClick={() => onNavigate('teachers')}
+            collapsed={!isOpen} 
+          />
+        )}
+        
+        {isTeacher && (
+          <SidebarItem 
+            icon={GraduationCap} 
+            label="PACE Progress" 
+            active={activeTab === 'pace'} 
+            onClick={() => onNavigate('pace')}
+            collapsed={!isOpen} 
+          />
+        )}
+
         <SidebarItem 
           icon={AlertTriangle} 
           label="Early Warning" 

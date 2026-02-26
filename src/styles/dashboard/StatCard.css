@@ -1,4 +1,4 @@
-.stat-card {
+.dash-stat-card {
   background-color: var(--bg-primary);
   padding: 1.5rem;
   border-radius: 0.75rem;
@@ -7,23 +7,23 @@
   transition: all 0.2s ease;
 }
 
-.stat-card.clickable {
+.dash-stat-card.clickable {
   cursor: pointer;
 }
 
-.stat-card.clickable:hover {
+.dash-stat-card.clickable:hover {
   transform: translateY(-2px);
   box-shadow: var(--shadow-md);
 }
 
-.stat-header {
+.dash-stat-header {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
   margin-bottom: 0.5rem;
 }
 
-.stat-title {
+.dash-stat-title {
   color: var(--text-secondary);
   font-size: 0.875rem;
   font-weight: 500;
@@ -31,7 +31,7 @@
   letter-spacing: 0.5px;
 }
 
-.stat-value {
+.dash-stat-value {
   font-size: 2rem;
   font-weight: 700;
   color: var(--text-primary);
@@ -39,7 +39,7 @@
   line-height: 1.2;
 }
 
-.stat-icon {
+.dash-stat-icon {
   padding: 0.75rem;
   border-radius: 0.5rem;
   background-color: var(--bg-tertiary);
@@ -48,26 +48,26 @@
   justify-content: center;
 }
 
-.stat-footer {
+.dash-stat-footer {
   margin-top: 0.75rem;
   display: flex;
   align-items: center;
   gap: 0.5rem;
 }
 
-.stat-subtext {
+.dash-stat-subtext {
   font-size: 0.875rem;
   color: var(--text-secondary);
 }
 
-.trend-up {
+.dash-trend-up {
   color: var(--success);
   font-weight: 600;
   font-size: 1rem;
   line-height: 1;
 }
 
-.trend-down {
+.dash-trend-down {
   color: var(--danger);
   font-weight: 600;
   font-size: 1rem;
@@ -76,24 +76,24 @@
 
 /* Responsive */
 @media (max-width: 768px) {
-  .stat-card {
+  .dash-stat-card {
     padding: 1.25rem;
   }
   
-  .stat-value {
+  .dash-stat-value {
     font-size: 1.75rem;
   }
   
-  .stat-icon {
+  .dash-stat-icon {
     padding: 0.5rem;
   }
   
-  .stat-icon svg {
+  .dash-stat-icon svg {
     width: 20px;
     height: 20px;
   }
   
-  .trend-up, .trend-down {
+  .dash-trend-up, .dash-trend-down {
     font-size: 0.875rem;
   }
 }

@@ -30,7 +30,7 @@ const UserMenu = ({ onLogout, onNavigate }) => {
   return (
     <div className="user-menu" ref={menuRef}>
       <button className="user-menu-trigger" onClick={toggleMenu}>
-        <div className="avatar">AU</div>
+        <div className="avatar">AD</div>
         <div className="user-info">
           <span className="user-name">Admin User</span>
           <span className="user-role">Administrator</span>

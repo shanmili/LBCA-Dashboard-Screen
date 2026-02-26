@@ -3,7 +3,7 @@ import useProfileSettingsState from "../../hooks/useProfileSettingsState";
 import UploadPhotoModal from './profileSetting/UploadPhoto';
 import '../../styles/profileSetting/ProfileSetting.css';
 
-const ProfileSetting = ({ onNavigate }) => {
+const ProfileSetting = ({ onNavigate, onAdminPhotoUpdate }) => { // Add prop
   const { 
     fname, setFname, 
     lname, setLname, 
@@ -16,6 +16,7 @@ const ProfileSetting = ({ onNavigate }) => {
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [showPhotoModal, setShowPhotoModal] = useState(false);
+  const [profilePhoto, setProfilePhoto] = useState(null);
 
   const handlePasswordChange = () => {
     if (!currentPassword || !newPassword || !confirmPassword) {
@@ -39,12 +40,31 @@ const ProfileSetting = ({ onNavigate }) => {
     setConfirmPassword('');
   };
 
+  const handlePhotoUpload = (file) => {
+    const photoUrl = URL.createObjectURL(file);
+    setProfilePhoto(photoUrl);
+    
+    // Update admin photo in parent if this is admin
+    if (onAdminPhotoUpdate) {
+      console.log('Calling onAdminPhotoUpdate with:', photoUrl);
+      onAdminPhotoUpdate(photoUrl);
+    }
+    
+    showToast('Profile photo updated successfully!');
+    setShowPhotoModal(false);
+  };
+
+  const handleCancelProfile = () => {
+    setFname('Admin');
+    setLname('User');
+  };
+
   return (
     <div className="profile-page">
       <div className="profile-container">
-        {/* Back Button - Navigates to dashboard */}
+        {/* Back Button */}
         <button className="back-btn" onClick={() => onNavigate('dashboard')}>
-            ← Back to Dashboard
+          ← Back to Dashboard
         </button>
 
         <h1 className="profile-title">Account Settings</h1>
@@ -54,7 +74,17 @@ const ProfileSetting = ({ onNavigate }) => {
         <div className="profile-card">
           <div className="card-label">Profile</div>
           <div className="avatar-section">
-            <div className="avatar-large">{initials}</div>
+            <div className="avatar-large">
+              {profilePhoto ? (
+                <img 
+                  src={profilePhoto} 
+                  alt="Profile" 
+                  className="avatar-image" 
+                />
+              ) : (
+                initials
+              )}
+            </div>
             <div className="avatar-info">
               <h3 className="avatar-name">{displayName}</h3>
               <p className="avatar-email">{email}</p>
@@ -88,7 +118,7 @@ const ProfileSetting = ({ onNavigate }) => {
             </div>
           </div>
           <div className="card-actions">
-            <button className="btn-secondary" onClick={() => { setFname('Admin'); setLname('User'); }}>
+            <button className="btn-secondary" onClick={handleCancelProfile}>
               Cancel
             </button>
             <button className="btn-primary" onClick={() => showToast('Profile updated successfully.')}>
@@ -230,10 +260,7 @@ const ProfileSetting = ({ onNavigate }) => {
       <UploadPhotoModal 
         isOpen={showPhotoModal}
         onClose={() => setShowPhotoModal(false)}
-        onUpload={(file) => {
-          showToast('Profile photo updated successfully!');
-          setShowPhotoModal(false);
-        }}
+        onUpload={handlePhotoUpload}
       />
 
       {/* Toast Notification */}
