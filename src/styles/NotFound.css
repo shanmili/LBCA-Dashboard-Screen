@@ -1,0 +1,213 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;700;900&display=swap');
+
+.notfound-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  min-height: 500px;
+  font-family: 'Nunito Sans', sans-serif;
+  background-color: var(--bg-primary);
+  border-radius: 8px;
+  box-shadow: var(--shadow-card);
+  padding: 2rem;
+}
+
+.notfound-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  width: 100%;
+  max-width: 900px;
+  flex-wrap: wrap;
+}
+
+.notfound-svg-col {
+  flex: 1 1 340px;
+  max-width: 460px;
+  min-width: 260px;
+}
+
+.notfound-svg-col svg { width: 100%; height: auto; }
+
+.notfound-text-col {
+  flex: 1 1 260px;
+  max-width: 420px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.notfound-code {
+  font-size: 7.5em;
+  margin: 15px 0;
+  font-weight: 900;
+  color: #0e0620;
+  line-height: 1;
+  font-family: 'Nunito Sans', sans-serif;
+}
+
+.notfound-title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #0e0620;
+  margin-bottom: 0.75rem;
+  font-family: 'Nunito Sans', sans-serif;
+}
+
+.notfound-message {
+  font-size: 1rem;
+  color: #0e0620;
+  line-height: 1.7;
+  margin-bottom: 1.5rem;
+  font-family: 'Nunito Sans', sans-serif;
+}
+
+.notfound-btn {
+  font-family: 'Nunito Sans', sans-serif;
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  background: transparent;
+  padding: 8px 50px;
+  border-radius: 30px;
+  cursor: pointer;
+  font-size: 1em;
+  letter-spacing: 2px;
+  transition: color 0.2s ease, background 0.2s ease;
+  font-weight: bold;
+  margin: 5px 0;
+  border: 4px solid #2ccf6d;
+  color: #0e0620;
+}
+
+.notfound-btn::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0;
+  width: 0%;
+  height: 100%;
+  background: #2ccf6d;
+  z-index: -1;
+  transition: width 0.2s ease;
+}
+
+.notfound-btn:hover { color: #fff; }
+.notfound-btn:hover::before { width: 100%; }
+
+/* Animations */
+.nf-spaceman {
+  animation: nf-float 3s ease-in-out infinite;
+  transform-origin: 50% 50%;
+}
+@keyframes nf-float {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50%       { transform: translateY(-8px) rotate(1deg); }
+}
+
+.nf-planet {
+  animation: nf-rock 2s ease-in-out infinite;
+  transform-origin: 572px 108px;
+}
+@keyframes nf-rock {
+  0%, 100% { transform: rotate(0deg); }
+  50%       { transform: rotate(-2deg); }
+}
+
+.nf-crater-big { animation: nf-slide-right 2s ease-in-out infinite; }
+.nf-crater-small { animation: nf-slide-left 2s ease-in-out infinite; }
+@keyframes nf-slide-right {
+  0%, 100% { transform: translateX(0); }
+  50%       { transform: translateX(3px); }
+}
+@keyframes nf-slide-left {
+  0%, 100% { transform: translateX(0); }
+  50%       { transform: translateX(-3px); }
+}
+
+.nf-star-big {
+  animation: nf-star-spin 3s ease-in-out infinite;
+  transform-origin: 50% 50%;
+}
+@keyframes nf-star-spin {
+  0%   { transform: rotate(-15deg); }
+  50%  { transform: rotate(15deg); }
+  100% { transform: rotate(-15deg); }
+}
+
+.nf-star-small {
+  animation: nf-pulse 2s ease-in-out infinite;
+  transform-origin: 50% 50%;
+}
+@keyframes nf-pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50%       { transform: scale(0); opacity: 0; }
+}
+
+.nf-circle-big { animation: nf-bob-big 2s ease-in-out infinite; }
+@keyframes nf-bob-big {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-2px); }
+}
+
+.nf-circle-small { animation: nf-bob-small 2s ease-in-out infinite; }
+@keyframes nf-bob-small {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-4px); }
+}
+
+.nf-glassshine {
+  animation: nf-shine 10s ease-in-out infinite;
+  animation-delay: 2s;
+}
+@keyframes nf-shine {
+  0%, 15%, 100% { transform: translateX(-68px); opacity: 0; }
+  20%            { transform: translateX(-68px); opacity: 1; }
+  35%            { transform: translateX(80px) rotate(-30deg); opacity: 1; }
+  40%            { transform: translateX(80px) rotate(-30deg); opacity: 0; }
+}
+
+/* Dark mode */
+[data-theme="dark"] .notfound-code,
+[data-theme="dark"] .notfound-title,
+[data-theme="dark"] .notfound-message {
+  color: #e5e7eb;
+}
+
+[data-theme="dark"] .notfound-svg-col svg circle,
+[data-theme="dark"] .notfound-svg-col svg ellipse,
+[data-theme="dark"] .notfound-svg-col svg line,
+[data-theme="dark"] .notfound-svg-col svg path,
+[data-theme="dark"] .notfound-svg-col svg polygon {
+  stroke: rgba(255, 255, 255, 0.75);
+}
+
+[data-theme="dark"] .notfound-svg-col svg circle[fill="#0E0620"] {
+  fill: rgba(255, 255, 255, 0.75);
+}
+
+[data-theme="dark"] .notfound-svg-col svg path[fill="#FFFFFF"],
+[data-theme="dark"] .notfound-svg-col svg circle[fill="#FFFFFF"],
+[data-theme="dark"] .notfound-svg-col svg ellipse[fill="#FFFFFF"] {
+  fill: rgba(255, 255, 255, 0.06);
+}
+
+[data-theme="dark"] .notfound-btn {
+  border-color: #2ccf6d;
+  color: #ffffff;
+}
+
+[data-theme="dark"] .notfound-btn::before {
+  background: #2ccf6d;
+}
+
+[data-theme="dark"] .notfound-btn:hover {
+  color: #ffffff;
+}
+
+@media (max-width: 640px) {
+  .notfound-row { flex-direction: column; text-align: center; }
+  .notfound-text-col { align-items: center; }
+  .notfound-code { font-size: 5em; }
+}

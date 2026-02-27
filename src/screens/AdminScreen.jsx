@@ -9,16 +9,18 @@ import StudentsProfile from '../components/modules/students/StudentProfile.jsx';
 import TeachersPage from '../components/modules/TeachersPage.jsx';
 import PacePage from '../components/modules/PacePage.jsx';
 import EarlyWarningPage from '../components/modules/EarlyWarningPage.jsx';
+import NotFound from '../components/common/NotFound.jsx';
 
 const AdminScreen = ({ onLogout, user }) => {
   const navigate = useNavigate();
   const [adminPhoto, setAdminPhoto] = useState(null);
 
   useEffect(() => {
-    if (window.location.pathname === '/') {
+    if (window.location.pathname.endsWith('/LBCA-Monitoring-System') || 
+        window.location.pathname.endsWith('/LBCA-Monitoring-System/')) {
       navigate('/dashboard', { replace: true });
     }
-  }, [navigate]);
+  }, []);
 
   const handleNavigate = (tab, studentId) => {
     if (tab === 'logout') { 
@@ -40,7 +42,6 @@ const AdminScreen = ({ onLogout, user }) => {
     if (path.includes('/account-settings')) return 'account-settings';
     if (path.includes('/students')) return 'students';
     if (path.includes('/teachers')) return 'teachers';
-    if (path.includes('/pace')) return 'pace';
     if (path.includes('/risk')) return 'risk';
     if (path.includes('/student/')) return 'students';
     return 'dashboard';
@@ -64,7 +65,6 @@ const AdminScreen = ({ onLogout, user }) => {
           <Route path="/dashboard" element={<Dashboard onNavigate={handleNavigate} />} />
           <Route path="/students" element={<StudentsPage onNavigate={handleNavigate} />} />
           <Route path="/teachers" element={<TeachersPage onNavigate={handleNavigate} />} />
-          <Route path="/pace" element={<PacePage onNavigate={handleNavigate} />} />
           <Route path="/risk" element={<EarlyWarningPage onNavigate={handleNavigate} />} />
           <Route path="/account-settings" element={
             <ProfileSetting 
@@ -73,7 +73,7 @@ const AdminScreen = ({ onLogout, user }) => {
             />
           } />
           <Route path="/student/:studentId" element={<StudentsProfile onNavigate={handleNavigate} />} />
-          <Route path="*" element={<Navigate to="/dashboard" replace />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </MainLayout>
     </NotificationProvider>

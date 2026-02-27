@@ -8,13 +8,15 @@ import StudentsPage from '../components/modules/StudentsPage.jsx';
 import StudentsProfile from '../components/modules/students/StudentProfile.jsx';
 import PacePage from '../components/modules/PacePage.jsx';
 import EarlyWarningPage from '../components/modules/EarlyWarningPage.jsx';
+import NotFound from '../components/common/NotFound.jsx';
 
 const TeacherScreen = ({ onLogout, user }) => {
   const navigate = useNavigate();
 
   // Redirect to /dashboard on first mount
   useEffect(() => {
-    if (window.location.pathname === '/') {
+    if (window.location.pathname.endsWith('/LBCA-Monitoring-System') || 
+        window.location.pathname.endsWith('/LBCA-Monitoring-System/')) {
       navigate('/dashboard', { replace: true });
     }
   }, []);
@@ -53,7 +55,7 @@ const TeacherScreen = ({ onLogout, user }) => {
           <Route path="/risk" element={<EarlyWarningPage onNavigate={handleNavigate} />} />
           <Route path="/account-settings" element={<ProfileSetting onNavigate={handleNavigate} />} />
           <Route path="/student/:studentId" element={<StudentsProfile onNavigate={handleNavigate} />} />
-          <Route path="*" element={<Navigate to="/dashboard" replace />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </MainLayout>
     </NotificationProvider>

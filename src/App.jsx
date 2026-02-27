@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { useState } from 'react';
 import TeacherScreen from './screens/TeacherScreen';
 import AdminScreen from './screens/AdminScreen';
@@ -22,7 +22,11 @@ const VALID_CREDENTIALS = {
 };
 
 function App() {
-  const [user, setUser] = useState(null);
+  // Restore user from sessionStorage so reloads don't kick you to login
+  const [user, setUser] = useState(() => {
+    const saved = sessionStorage.getItem('lbca_user');
+    return saved ? JSON.parse(saved) : null;
+  });
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
@@ -31,12 +35,20 @@ function App() {
     setError('');
 
     setTimeout(() => {
-      if (email === VALID_CREDENTIALS.teacher.email &&
-          password === VALID_CREDENTIALS.teacher.password) {
-        setUser({ role: 'teacher', email });
-      } else if (email === VALID_CREDENTIALS.admin.email &&
-                 password === VALID_CREDENTIALS.admin.password) {
-        setUser({ role: 'admin', email });
+      if (
+        email === VALID_CREDENTIALS.teacher.email &&
+        password === VALID_CREDENTIALS.teacher.password
+      ) {
+        const userData = { role: 'teacher', email };
+        sessionStorage.setItem('lbca_user', JSON.stringify(userData));
+        setUser(userData);
+      } else if (
+        email === VALID_CREDENTIALS.admin.email &&
+        password === VALID_CREDENTIALS.admin.password
+      ) {
+        const userData = { role: 'admin', email };
+        sessionStorage.setItem('lbca_user', JSON.stringify(userData));
+        setUser(userData);
       } else {
         setError('Invalid email or password');
       }
@@ -44,41 +56,43 @@ function App() {
     }, 1000);
   };
 
-  const handleLogout = () => setUser(null);
+  const handleLogout = () => {
+    sessionStorage.removeItem('lbca_user');
+    setUser(null);
+  };
 
   return (
     <SchoolProvider>
-    <BrowserRouter>
-      <Routes>
-        {/* Not logged in — show login for all routes */}
-        {!user && (
-          <Route
-            path="*"
-            element={
-              <LoginScreen
-                onLogin={handleLogin}
-                error={error}
-                isLoading={isLoading}
-              />
-            }
-          />
-        )}
+      <BrowserRouter basename="/LBCA-Monitoring-System">
+        <Routes>
+          {!user && (
+            <Route
+              path="*"
+              element={
+                <LoginScreen
+                  onLogin={handleLogin}
+                  error={error}
+                  isLoading={isLoading}
+                />
+              }
+            />
+          )}
 
-        {/* Logged in as teacher */}
-        {user?.role === 'teacher' && (
-          <>
-            <Route path="/*" element={<TeacherScreen onLogout={handleLogout} user={user} />} />
-          </>
-        )}
+          {user?.role === 'teacher' && (
+            <Route
+              path="/*"
+              element={<TeacherScreen onLogout={handleLogout} user={user} />}
+            />
+          )}
 
-        {/* Logged in as admin */}
-        {user?.role === 'admin' && (
-          <>
-            <Route path="/*" element={<AdminScreen onLogout={handleLogout} user={user} />} />
-          </>
-        )}
-      </Routes>
-    </BrowserRouter>
+          {user?.role === 'admin' && (
+            <Route
+              path="/*"
+              element={<AdminScreen onLogout={handleLogout} user={user} />}
+            />
+          )}
+        </Routes>
+      </BrowserRouter>
     </SchoolProvider>
   );
 }
