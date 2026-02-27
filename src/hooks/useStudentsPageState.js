@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { studentsData } from '../data/mockData';
 
+<<<<<<< HEAD
 const SCHOOL_YEARS = ['2025-2026', '2024-2025', '2023-2024'];
 
 export default function useStudentsPageState() {
@@ -15,6 +16,22 @@ export default function useStudentsPageState() {
                           student.id.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesSection = sectionFilter === 'All' || student.section === sectionFilter;
     return matchesSearch && matchesSection;
+=======
+export default function useStudentsPageState() {
+  const [filters, setFilters] = useState({
+    schoolYear: '2025-2026',
+    section: 'All'
+  });
+  const [students] = useState(studentsData);
+
+  const updateFilter = (key, value) => {
+    setFilters(prev => ({ ...prev, [key]: value }));
+  };
+
+  const filteredStudents = students.filter(student => {
+    const matchesSection = filters.section === 'All' || student.section === filters.section;
+    return matchesSection;
+>>>>>>> haifah-nor
   });
 
   const getStatusBadgeClass = (status) => {
@@ -22,6 +39,7 @@ export default function useStudentsPageState() {
     return 'status-badge on-track';
   };
 
+<<<<<<< HEAD
   const handleAddStudent = (formData) => {
     const newId = 'S' + String(students.length + 1).padStart(3, '0');
     const newStudent = { ...formData, id: newId };
@@ -46,3 +64,13 @@ export default function useStudentsPageState() {
     handleAddStudent,
   };
 }
+=======
+  return {
+    filters,
+    updateFilter,
+    students,
+    filteredStudents,
+    getStatusBadgeClass,
+  };
+}
+>>>>>>> haifah-nor

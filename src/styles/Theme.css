@@ -1,4 +1,5 @@
 .theme-toggle-container {
+<<<<<<< HEAD
   display: flex;
   align-items: center;
   gap: 12px;
@@ -10,6 +11,10 @@
   font-size: 14px;
   font-weight: 500;
   color: var(--text-primary);
+=======
+  display: inline-flex;
+  align-items: center;
+>>>>>>> haifah-nor
 }
 
 .theme-toggle-button {
@@ -17,6 +22,7 @@
   border: none;
   cursor: pointer;
   padding: 0;
+<<<<<<< HEAD
   width: 60px;
   height: 30px;
   border-radius: 30px;
@@ -47,11 +53,35 @@
   position: absolute;
   top: 2px;
   left: 2px;
+=======
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.toggle-track {
+  width: 48px;
+  height: 24px;
+  background-color: var(--bg-tertiary);
+  border-radius: 30px;
+  position: relative;
+  border: 2px solid var(--border-color);
+  transition: all 0.3s ease;
+}
+
+.toggle-thumb {
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  background-color: var(--bg-primary);
+  border-radius: 50%;
+>>>>>>> haifah-nor
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 14px;
   transition: transform 0.3s ease;
+<<<<<<< HEAD
   box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
 
@@ -217,4 +247,33 @@
   --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.3);
   --shadow-modal: 0 20px 60px rgba(0, 0, 0, 0.5);
   --shadow-dropdown: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+=======
+  box-shadow: var(--shadow-md);
+}
+
+/* Dark mode state - thumb moves to right */
+.theme-toggle-button.dark .toggle-thumb {
+  transform: translateX(26px);
+}
+
+/* Light mode background */
+.theme-toggle-button.light .toggle-track {
+  background-color: #FDB813; /* Sun color */
+  border-color: #F39C12;
+}
+
+/* Dark mode background */
+.theme-toggle-button.dark .toggle-track {
+  background-color: #2C3E50; /* Night color */
+  border-color: #34495E;
+}
+
+/* Hover effects */
+.theme-toggle-button:hover .toggle-thumb {
+  transform: scale(1.1);
+}
+
+.theme-toggle-button.dark:hover .toggle-thumb {
+  transform: translateX(26px) scale(1.1);
+>>>>>>> haifah-nor
 }
