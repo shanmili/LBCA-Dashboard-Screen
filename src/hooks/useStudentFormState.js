@@ -1,9 +1,5 @@
 import { useState, useEffect } from 'react';
 import { studentSections, studentGrades, defaultSubjects, emptyStudentForm } from '../data/mockData';
-<<<<<<< HEAD
-import { computeStudent } from '../components/common/studentUtils';
-=======
->>>>>>> haifah-nor
 
 export default function useStudentFormState({ isOpen, student, onSave }) {
   const isEdit = Boolean(student);
@@ -38,18 +34,10 @@ export default function useStudentFormState({ isOpen, student, onSave }) {
 
   const [formData, setFormData] = useState(buildFormData);
 
-<<<<<<< HEAD
-  // Re-initialize form whenever the modal opens or the student changes
-=======
->>>>>>> haifah-nor
   useEffect(() => {
     if (isOpen) {
       setFormData(buildFormData());
     }
-<<<<<<< HEAD
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-=======
->>>>>>> haifah-nor
   }, [isOpen, student]);
 
   const handleChange = (field, value) => {
@@ -90,8 +78,4 @@ export default function useStudentFormState({ isOpen, student, onSave }) {
     handleAttendanceChange,
     handleSubmit,
   };
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> haifah-nor

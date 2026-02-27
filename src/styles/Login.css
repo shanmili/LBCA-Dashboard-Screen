@@ -29,11 +29,7 @@ margin-bottom: 1.5rem;
 .logo-circle {
 width: 4rem;
 height: 4rem;
-<<<<<<< HEAD
-background-color: var(--brand-primary);
-=======
 background-color: var(--primary);
->>>>>>> haifah-nor
 display: flex;
 align-items: center;
 justify-content: center;
@@ -48,11 +44,7 @@ font-weight: 700;
 .title {
 font-size: 1.5rem;
 font-weight: 700;
-<<<<<<< HEAD
-color: var(--brand-primary);
-=======
 color: var(--primary);
->>>>>>> haifah-nor
 }
 
 .subtitle {
@@ -72,11 +64,7 @@ gap: 1rem;
 display: block;
 font-size: 0.875rem;
 font-weight: 500;
-<<<<<<< HEAD
-color: var(--text-dark);
-=======
 color: var(--text-primary);
->>>>>>> haifah-nor
 margin-bottom: 0.25rem;
 }
 
@@ -96,11 +84,7 @@ pointer-events: none;
 .form-input {
 width: 100%;
 padding: 0.625rem 1rem 0.625rem 2.5rem;
-<<<<<<< HEAD
-border: 1px solid var(--border-input);
-=======
 border: 1px solid var(--border-color);
->>>>>>> haifah-nor
 border-radius: 0.5rem;
 outline: none;
 font-size: 1rem;
@@ -109,22 +93,14 @@ transition: all 0.2s;
 }
 
 .form-input:focus {
-<<<<<<< HEAD
-border-color: var(--brand-primary);
-=======
 border-color: var(--primary);
->>>>>>> haifah-nor
 box-shadow: 0 0 0 2px rgba(31, 71, 136, 0.2);
 }
 
 .btn-submit {
 width: 100%;
 padding: 0.625rem;
-<<<<<<< HEAD
-background-color: var(--brand-primary);
-=======
 background-color: var(--primary);
->>>>>>> haifah-nor
 color: var(--text-inverse);
 font-weight: 500;
 border: none;
@@ -141,8 +117,6 @@ background-color: var(--sidebar-hover);
 .btn-submit:active {
 transform: scale(0.98);
 }
-<<<<<<< HEAD
-=======
 
 .error-message {
 background-color: var(--danger-bg);
@@ -153,7 +127,6 @@ font-size: 14px;
 margin-bottom: 14px;
 }
 
->>>>>>> haifah-nor
 /* ===== Responsive: Tablet Portrait ≤768px ===== */
 @media (max-width: 768px) {
   .login-card {

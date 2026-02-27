@@ -4,19 +4,6 @@ import { paceSubjects, paceEncodingData } from '../data/mockData';
 const SCHOOL_YEARS = ['2025-2026', '2024-2025', '2023-2024'];
 
 export default function usePaceEncodingState() {
-<<<<<<< HEAD
-  const [selectedSection, setSelectedSection] = useState('Section A');
-  const [selectedSubject, setSelectedSubject] = useState(paceSubjects[0] || 'Math');
-  const [selectedSchoolYear, setSelectedSchoolYear] = useState('2025-2026');
-  const [encodingData, setEncodingData] = useState([]);
-  const [saveMessage, setSaveMessage] = useState('');
-
-  // Load data when section/subject changes
-  useEffect(() => {
-    const sectionData = paceEncodingData[selectedSection];
-    if (sectionData && sectionData[selectedSubject]) {
-      setEncodingData(sectionData[selectedSubject].map(s => ({ ...s })));
-=======
   const [filters, setFilters] = useState({
     schoolYear: '2025-2026',
     section: 'Section A',
@@ -36,16 +23,11 @@ export default function usePaceEncodingState() {
     const sectionData = paceEncodingData[filters.section];
     if (sectionData && sectionData[filters.subject]) {
       setEncodingData(sectionData[filters.subject].map(s => ({ ...s })));
->>>>>>> haifah-nor
     } else {
       setEncodingData([]);
     }
     setSaveMessage('');
-<<<<<<< HEAD
-  }, [selectedSection, selectedSubject]);
-=======
   }, [filters.section, filters.subject]);
->>>>>>> haifah-nor
 
   const handleCompletedChange = (studentId, completed) => {
     setEncodingData(prev => prev.map(row =>
@@ -69,29 +51,15 @@ export default function usePaceEncodingState() {
   };
 
   const handleSaveAll = () => {
-<<<<<<< HEAD
-    setSaveMessage(`All PACE data saved for ${selectedSection} - ${selectedSubject}`);
-=======
     setSaveMessage(`All PACE data saved for ${filters.section} - ${filters.subject}`);
->>>>>>> haifah-nor
     setTimeout(() => setSaveMessage(''), 3000);
   };
 
   return {
     SCHOOL_YEARS,
-<<<<<<< HEAD
-    paceSubjects,
-    selectedSection,
-    setSelectedSection,
-    selectedSubject,
-    setSelectedSubject,
-    selectedSchoolYear,
-    setSelectedSchoolYear,
-=======
     filters,
     updateFilter,
     subjectOptions,
->>>>>>> haifah-nor
     encodingData,
     saveMessage,
     handleCompletedChange,
@@ -99,8 +67,4 @@ export default function usePaceEncodingState() {
     handleSave,
     handleSaveAll,
   };
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> haifah-nor
