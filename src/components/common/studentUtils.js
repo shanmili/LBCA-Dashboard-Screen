@@ -1,14 +1,11 @@
-// ============================================================
+
 // studentUtils.js — Centralized Computation & Automation
-// ============================================================
 // All formulas live here so that Add / Edit / Dashboard updates
 // always go through the same logic.  Import what you need:
-//
-//   import { computeStudent, computeDashboardStats, ... } from '../common/studentUtils';
-// ============================================================
+// import { computeStudent, computeDashboardStats, ... } from '../common/studentUtils';
 
 // ──────────────────────────────────────────
-// 🎯 1. PACE Completion % (per-subject & overall)
+// 1. PACE Completion % (per-subject & overall)
 // ──────────────────────────────────────────
 
 /**
@@ -35,7 +32,7 @@ export function calculateOverallPace(subjects) {
 }
 
 // ──────────────────────────────────────────
-// 🎯 2. Subject Status (Behind / On Track)
+//2. Subject Status (Behind / On Track)
 // ──────────────────────────────────────────
 
 /**
@@ -49,7 +46,7 @@ export function getSubjectStatus(completed, total) {
 }
 
 // ──────────────────────────────────────────
-// 🎯 3. PACE Status (student-level)
+//3. PACE Status (student-level)
 // ──────────────────────────────────────────
 
 /**
@@ -64,7 +61,7 @@ export function getPaceStatus(paceCompletion) {
 }
 
 // ──────────────────────────────────────────
-// 🎯 4. Attendance Rate from day counts
+// 4. Attendance Rate from day counts
 // ──────────────────────────────────────────
 
 /**
@@ -83,7 +80,7 @@ export function calculateAttendanceRate(summary) {
 }
 
 // ──────────────────────────────────────────
-// 🎯 5. Risk Level Detection (rule-based)
+// 5. Risk Level Detection (rule-based)
 // ──────────────────────────────────────────
 
 /**
@@ -104,7 +101,7 @@ export function calculateRiskLevel(paceCompletion, attendance, pendingPaces = 0)
 }
 
 // ──────────────────────────────────────────
-// 🎯 6. Risk Factor + Suggested Action text
+// 6. Risk Factor + Suggested Action text
 // ──────────────────────────────────────────
 
 export function generateRiskFactors(paceCompletion, attendance, pendingPaces = 0) {
@@ -144,7 +141,7 @@ export function generateSuggestedAction(riskLevel) {
 }
 
 // ──────────────────────────────────────────
-// 🎯 7. Compute Full Student (single entry)
+// 7. Compute Full Student (single entry)
 // ──────────────────────────────────────────
 
 /**
@@ -202,7 +199,7 @@ export function computeStudent(raw) {
 }
 
 // ──────────────────────────────────────────
-// 🎯 8. Dashboard / KPI Card Helpers
+// 8. Dashboard / KPI Card Helpers
 // ──────────────────────────────────────────
 
 /**
