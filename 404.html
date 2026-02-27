@@ -3,9 +3,9 @@
   <head>
     <meta charset="utf-8">
     <script>
-      const base = '/LBCA-Monitoring-System';
-      const path = window.location.pathname.replace(base, '') || '/';
-      const search = window.location.search;
+      var base = '/LBCA-Monitoring-System';
+      var path = window.location.pathname.slice(base.length) || '/';
+      var search = window.location.search;
       sessionStorage.setItem('redirect', path + search);
       window.location.replace(base + '/');
     </script>
