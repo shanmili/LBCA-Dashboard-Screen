@@ -3,7 +3,7 @@ import { ChevronDown, User, Sun, LogOut } from 'lucide-react';
 import Theme from '../common/Theme.jsx';
 import '../../styles/layout/UserMenu.css';
 
-const UserMenu = ({ onLogout, onNavigate }) => {
+const UserMenu = ({ onLogout, onNavigate, adminPhoto }) => {
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = useRef(null);
 
@@ -30,7 +30,11 @@ const UserMenu = ({ onLogout, onNavigate }) => {
   return (
     <div className="user-menu" ref={menuRef}>
       <button className="user-menu-trigger" onClick={toggleMenu}>
-        <div className="avatar">AD</div>
+        <div className="avatar">
+          {adminPhoto ? (
+            <img src={adminPhoto} alt="Profile" style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover' }} />
+          ) : 'AD'}
+        </div>
         <div className="user-info">
           <span className="user-name">Admin User</span>
           <span className="user-role">Administrator</span>

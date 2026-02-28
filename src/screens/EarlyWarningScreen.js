@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Routes, Route, Navigate, useParams } from 'react-router-dom';
 import Sidebar from '../components/layout/Sidebar';
 import TopNav from '../components/layout/TopNav';
@@ -16,6 +16,7 @@ function StudentProfileWrapper({ onNavigate }) {
 
 export default function EarlyWarningScreen({ onLogout }) {
   const { sidebarOpen, activeTab, setActiveTab, toggleSidebar, handleNavigate } = useDashboardState();
+  const [adminPhoto, setAdminPhoto] = useState(null);
 
   return (
     <div className="dashboard-container">
@@ -28,6 +29,7 @@ export default function EarlyWarningScreen({ onLogout }) {
       <Sidebar
         isOpen={sidebarOpen}
         activeTab={activeTab}
+        onToggle={toggleSidebar}
         onNavigate={(tab) => {
           handleNavigate(tab);
           if (window.innerWidth <= 768) toggleSidebar();
@@ -35,13 +37,13 @@ export default function EarlyWarningScreen({ onLogout }) {
       />
 
       <div className="main-content">
-        <TopNav onToggle={toggleSidebar} onLogout={onLogout} activeTab={activeTab} onNavigate={handleNavigate} />
+        <TopNav onLogout={onLogout} activeTab={activeTab} onNavigate={handleNavigate} adminPhoto={adminPhoto} />
 
         <main className="content-area">
           <Routes>
             <Route path="/risk" element={<EarlyWarningPage onNavigate={handleNavigate} />} />
             <Route path="/student/:studentId" element={<StudentProfileWrapper onNavigate={handleNavigate} />} />
-            <Route path="/account-settings" element={<AccountSettings onNavigate={handleNavigate} />} />
+            <Route path="/account-settings" element={<AccountSettings onNavigate={handleNavigate} onAdminPhotoUpdate={setAdminPhoto} />} />
             {/* Default redirect */}
             <Route path="*" element={<Navigate to="/risk" replace />} />
           </Routes>

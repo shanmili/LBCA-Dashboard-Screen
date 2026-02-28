@@ -10,7 +10,8 @@ const MainLayout = ({
   onNavigate, 
   activeTab, 
   userRole = 'teacher', 
-  adminPhoto 
+  adminPhoto,
+  userPhoto
 }) => {
   const { isOpen: sidebarOpen, toggle: toggleSidebar } = useSidebarState();
 
@@ -21,6 +22,7 @@ const MainLayout = ({
         isOpen={sidebarOpen} 
         activeTab={activeTab} 
         onNavigate={onNavigate}
+        onToggle={toggleSidebar}
         userRole={userRole}
         adminPhoto={adminPhoto}
       />
@@ -30,6 +32,7 @@ const MainLayout = ({
           onLogout={onLogout}
           activeTab={activeTab}
           onNavigate={onNavigate}
+          adminPhoto={userPhoto ?? adminPhoto}
         />
         <main className="content-area">{children}</main>
       </div>

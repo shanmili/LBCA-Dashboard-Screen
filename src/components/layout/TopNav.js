@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { 
-  Menu, 
   Search, 
   Bell, 
   ChevronDown, 
@@ -24,7 +23,7 @@ const severityIcon = (type) => {
   return <AlertCircle size={14} className="notif-icon notif-icon--low" />;
 };
 
-const TopNav = ({ onToggle, onLogout, activeTab, onNavigate }) => {
+const TopNav = ({ onLogout, activeTab, onNavigate, adminPhoto }) => {
   const { isDropdownOpen, toggleDropdown, closeDropdown, pageTitle } = useTopNavState(activeTab);
   const { notifications, unreadCount, markAllRead, markRead } = useNotifications();
 
@@ -46,9 +45,6 @@ const TopNav = ({ onToggle, onLogout, activeTab, onNavigate }) => {
   return (
     <header className="top-nav">
       <div className="nav-left">
-        <button className="menu-button" onClick={onToggle}>
-          <Menu size={20} />
-        </button>
         <h1 className="page-title">{pageTitle}</h1>
       </div>
 
@@ -118,7 +114,11 @@ const TopNav = ({ onToggle, onLogout, activeTab, onNavigate }) => {
             className="user-profile" 
             onClick={toggleDropdown}
           >
-            <div className="avatar">AD</div>
+            <div className="avatar" style={{ overflow: 'hidden', padding: 0 }}>
+              {adminPhoto ? (
+                <img src={adminPhoto} alt="Profile" style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover' }} />
+              ) : 'AD'}
+            </div>
             <div className="user-info">
               <p className="user-name">Admin User</p>
               <p className="user-role">Administrator</p>

@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import useAccountSettingsState from '../../hooks/useAccountSettingsState';
 import '../../styles/AccountSettings.css';
 
 
-const AccountSettings = ({ onNavigate }) => {
+const AccountSettings = ({ onNavigate, onAdminPhotoUpdate }) => {
   const { 
     fname, setFname, 
     lname, setLname, 
@@ -11,6 +11,17 @@ const AccountSettings = ({ onNavigate }) => {
     toast, showToast, 
     displayName, initials 
   } = useAccountSettingsState();
+
+  const [profilePhoto, setProfilePhoto] = useState(null);
+  const fileInputRef = useRef(null);
+
+  const handlePhotoChange = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const url = URL.createObjectURL(file);
+    setProfilePhoto(url);
+    if (onAdminPhotoUpdate) onAdminPhotoUpdate(url);
+  };
 
   return (
       <div className="page">
@@ -28,11 +39,22 @@ const AccountSettings = ({ onNavigate }) => {
           <div className="as-card">
             <div className="cardLabel">Profile</div>
             <div className="avatarSection">
-              <div className="as-avatar">{initials}</div>
+              <div className="as-avatar" style={{ overflow: 'hidden', padding: 0 }}>
+                {profilePhoto ? (
+                  <img src={profilePhoto} alt="Profile" style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '50%' }} />
+                ) : initials}
+              </div>
               <div className="avatarInfo">
                 <h3 className="avatarName">{displayName}</h3>
                 <p className="avatarEmail">{email}</p>
-                <button className="btnUpload" onClick={() => showToast('Photo upload coming soon')}>
+                <input
+                  type="file"
+                  accept="image/*"
+                  ref={fileInputRef}
+                  style={{ display: 'none' }}
+                  onChange={handlePhotoChange}
+                />
+                <button className="btnUpload" onClick={() => fileInputRef.current.click()}>
                   Change photo
                 </button>
               </div>
