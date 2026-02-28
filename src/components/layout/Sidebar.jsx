@@ -7,18 +7,22 @@ import {
   Users,
   GraduationCap,
   AlertTriangle,
+  Menu,
 } from 'lucide-react';
 
-const Sidebar = ({ isOpen, activeTab, onNavigate, userRole = 'teacher', adminPhoto }) => {
+const Sidebar = ({ isOpen, activeTab, onNavigate, onToggle, userRole = 'teacher', adminPhoto }) => {
   const isAdmin = userRole === 'admin';
   const isTeacher = userRole === 'teacher';
 
   return (
     <aside className={`sidebar ${isOpen ? 'sidebar-open' : 'sidebar-collapsed'}`}>
       <div className="sidebar-header">
+        <button className="sidebar-toggle-btn" onClick={onToggle}>
+          <Menu size={20} />
+        </button>
         <Logo 
           adminPhoto={adminPhoto} 
-          adminInitials="AD"
+          adminInitials={userRole === 'admin' ? 'AD' : 'TC'}
           showText={isOpen}
         />
       </div>

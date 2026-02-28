@@ -1,12 +1,12 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Menu, Search, Bell } from 'lucide-react';
+import { Search, Bell } from 'lucide-react';
 import useHeaderState from '../../hooks/useHeaderState.js';
 import { useNotifications } from '../../context/NotificationContext.jsx';
 import UserMenu from './UserMenu.jsx';
 import NotificationDropdown from './NotificationDropdown.jsx';
 import '../../styles/layout/Header.css';
 
-const Header = ({ onToggleSidebar, onLogout, activeTab, onNavigate }) => {
+const Header = ({ onToggleSidebar, onLogout, activeTab, onNavigate, adminPhoto, userRole = 'admin' }) => {
   const { pageTitle } = useHeaderState(activeTab);
   const { notifications, unreadCount, markAllRead, markRead } = useNotifications();
 
@@ -28,9 +28,6 @@ const Header = ({ onToggleSidebar, onLogout, activeTab, onNavigate }) => {
   return (
     <header className="header">
       <div className="header-left">
-        <button className="menu-button" onClick={onToggleSidebar} aria-label="Toggle menu">
-          <Menu size={24} />
-        </button>
         <h1 className="page-title">{pageTitle}</h1>
       </div>
 
@@ -74,7 +71,7 @@ const Header = ({ onToggleSidebar, onLogout, activeTab, onNavigate }) => {
           )}
         </div>
 
-        <UserMenu onLogout={onLogout} onNavigate={onNavigate} />
+        <UserMenu onLogout={onLogout} onNavigate={onNavigate} adminPhoto={adminPhoto} userRole={userRole} />
       </div>
     </header>
   );

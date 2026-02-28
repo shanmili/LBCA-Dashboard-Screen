@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { 
-  Menu, 
   Search, 
   Bell, 
   ChevronDown, 
@@ -24,7 +23,7 @@ const severityIcon = (type) => {
   return <AlertCircle size={14} className="notif-icon notif-icon--low" />;
 };
 
-const TopNav = ({ onToggle, onLogout, activeTab, onNavigate }) => {
+const TopNav = ({ onLogout, activeTab, onNavigate, adminPhoto, userRole = 'admin' }) => {
   const { isDropdownOpen, toggleDropdown, closeDropdown, pageTitle } = useTopNavState(activeTab);
   const { notifications, unreadCount, markAllRead, markRead } = useNotifications();
 
@@ -46,9 +45,6 @@ const TopNav = ({ onToggle, onLogout, activeTab, onNavigate }) => {
   return (
     <header className="top-nav">
       <div className="nav-left">
-        <button className="menu-button" onClick={onToggle}>
-          <Menu size={20} />
-        </button>
         <h1 className="page-title">{pageTitle}</h1>
       </div>
 
@@ -118,10 +114,14 @@ const TopNav = ({ onToggle, onLogout, activeTab, onNavigate }) => {
             className="user-profile" 
             onClick={toggleDropdown}
           >
-            <div className="avatar">AD</div>
+            <div className="avatar" style={{ overflow: 'hidden', padding: 0 }}>
+              {adminPhoto ? (
+                <img src={adminPhoto} alt="Profile" style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover' }} />
+              ) : (userRole === 'admin' ? 'AD' : 'TC')}
+            </div>
             <div className="user-info">
-              <p className="user-name">Admin User</p>
-              <p className="user-role">Administrator</p>
+              <p className="user-name">{userRole === 'admin' ? 'Admin User' : 'Teacher User'}</p>
+              <p className="user-role">{userRole === 'admin' ? 'Administrator' : 'Teacher'}</p>
             </div>
             <ChevronDown size={16} className={`dropdown-icon ${isDropdownOpen ? 'rotate' : ''}`} />
           </div>
@@ -130,7 +130,7 @@ const TopNav = ({ onToggle, onLogout, activeTab, onNavigate }) => {
           {isDropdownOpen && (
             <div className="user-dropdown">
               <div className="dropdown-header">
-                <p>Signed in as <strong>Admin</strong></p>
+                <p>Signed in as <strong>{userRole === 'admin' ? 'Admin User' : 'Teacher User'}</strong></p>
               </div>
               <hr />
               <button className="dropdown-item" onClick={() => { closeDropdown(); if (onNavigate) onNavigate('account-settings'); }}>

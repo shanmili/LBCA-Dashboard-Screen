@@ -3,14 +3,14 @@ import useProfileSettingsState from "../../hooks/useProfileSettingsState";
 import UploadPhotoModal from './profileSetting/UploadPhoto';
 import '../../styles/profileSetting/ProfileSetting.css';
 
-const ProfileSetting = ({ onNavigate, onAdminPhotoUpdate }) => { // Add prop
+const ProfileSetting = ({ onNavigate, onAdminPhotoUpdate, userRole = 'admin' }) => { // Add prop
   const { 
     fname, setFname, 
     lname, setLname, 
     email, setEmail, 
     toast, showToast, 
     displayName, initials 
-  } = useProfileSettingsState();
+  } = useProfileSettingsState(userRole);
 
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
@@ -55,7 +55,7 @@ const ProfileSetting = ({ onNavigate, onAdminPhotoUpdate }) => { // Add prop
   };
 
   const handleCancelProfile = () => {
-    setFname('Admin');
+    setFname(userRole === 'teacher' ? 'Teacher' : 'Admin');
     setLname('User');
   };
 

@@ -66,7 +66,7 @@ const AdminScreen = ({ onLogout, user }) => {
         adminPhoto={adminPhoto}
       >
         <Routes>
-          <Route path="/dashboard" element={<Dashboard onNavigate={handleNavigate} />} />
+          <Route path="/dashboard" element={<Dashboard onNavigate={handleNavigate} userRole="admin" />} />
           <Route path="/students" element={<StudentsPage onNavigate={handleNavigate} />} />
           <Route path="/teachers" element={<TeachersPage onNavigate={handleNavigate} />} />
           <Route path="/risk" element={<EarlyWarningPage onNavigate={handleNavigate} />} />

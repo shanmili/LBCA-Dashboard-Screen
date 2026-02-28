@@ -18,11 +18,35 @@
 }
 
 .sidebar-header {
-  padding: 5rem 1rem 1rem 1rem; 
+  padding: 1.25rem 1rem 1rem 1rem; 
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   margin-bottom: 1rem; 
+}
+
+.sidebar-toggle-btn {
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+  color: var(--sidebar-text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.45rem 0.55rem;
+  border-radius: 0.5rem;
+  margin-bottom: 0.75rem;
+  transition: background 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
+  align-self: flex-end;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+}
+
+.sidebar-toggle-btn:hover {
+  background: rgba(255, 255, 255, 0.22);
+  border-color: rgba(255, 255, 255, 0.35);
+  color: var(--sidebar-text);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
 .sidebar-header .admin-logo {
@@ -37,7 +61,7 @@
 }
 
 .sidebar-collapsed .sidebar-header {
-  padding: 5rem 1rem 1rem 1rem;
+  padding: 1.25rem 1rem 1rem 1rem;
 }
 
 .sidebar-collapsed .logo-avatar {

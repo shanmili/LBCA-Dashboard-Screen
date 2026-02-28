@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate, Routes, Route, Navigate } from 'react-router-dom';
 import MainLayout from '../components/layout/MainLayout.jsx';
 import { NotificationProvider } from '../context/NotificationContext.jsx';
@@ -12,6 +12,7 @@ import NotFound from '../components/common/NotFound.jsx';
 
 const TeacherScreen = ({ onLogout, user }) => {
   const navigate = useNavigate();
+  const [teacherPhoto, setTeacherPhoto] = useState(null);
 
   // Redirect to /dashboard on first mount
   useEffect(() => {
@@ -50,13 +51,14 @@ const TeacherScreen = ({ onLogout, user }) => {
         activeTab={getActiveTab()}
         onNavigate={handleNavigate}
         userRole="teacher"
+        userPhoto={teacherPhoto}
       >
         <Routes>
-          <Route path="/dashboard" element={<Dashboard onNavigate={handleNavigate} />} />
+          <Route path="/dashboard" element={<Dashboard onNavigate={handleNavigate} userRole="teacher" />} />
           <Route path="/students" element={<StudentsPage onNavigate={handleNavigate} />} />
           <Route path="/pace" element={<PacePage onNavigate={handleNavigate} />} />
           <Route path="/risk" element={<EarlyWarningPage onNavigate={handleNavigate} />} />
-          <Route path="/account-settings" element={<ProfileSetting onNavigate={handleNavigate} />} />
+          <Route path="/account-settings" element={<ProfileSetting onNavigate={handleNavigate} onAdminPhotoUpdate={setTeacherPhoto} userRole="teacher" />} />
           <Route path="/student/:studentId" element={<StudentsProfile onNavigate={handleNavigate} />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
