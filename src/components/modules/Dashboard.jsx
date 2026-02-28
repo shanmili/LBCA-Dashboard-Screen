@@ -8,7 +8,7 @@ import ActivityFeed from './dashboard/ActivityFeed';
 import useDashboardDataState from '../../hooks/useDashboardDataState';
 import '../../styles/dashboard/dashboard.css';
 
-const Dashboard = ({ onNavigate }) => {
+const Dashboard = ({ onNavigate, userRole = 'admin' }) => {
   const {
     filters,
     updateFilter,
@@ -23,7 +23,7 @@ const Dashboard = ({ onNavigate }) => {
     <div className="dashboard">
       <OverviewSection 
         title="Overview"
-        subtitle="Welcome back, Admin User"
+        subtitle={`Welcome back, ${userRole === 'teacher' ? 'Teacher User' : 'Admin User'}`}
         filters={filters}
         onFilterChange={updateFilter}
       />

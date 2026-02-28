@@ -6,7 +6,7 @@ import UserMenu from './UserMenu.jsx';
 import NotificationDropdown from './NotificationDropdown.jsx';
 import '../../styles/layout/Header.css';
 
-const Header = ({ onToggleSidebar, onLogout, activeTab, onNavigate, adminPhoto }) => {
+const Header = ({ onToggleSidebar, onLogout, activeTab, onNavigate, adminPhoto, userRole = 'admin' }) => {
   const { pageTitle } = useHeaderState(activeTab);
   const { notifications, unreadCount, markAllRead, markRead } = useNotifications();
 
@@ -71,7 +71,7 @@ const Header = ({ onToggleSidebar, onLogout, activeTab, onNavigate, adminPhoto }
           )}
         </div>
 
-        <UserMenu onLogout={onLogout} onNavigate={onNavigate} adminPhoto={adminPhoto} />
+        <UserMenu onLogout={onLogout} onNavigate={onNavigate} adminPhoto={adminPhoto} userRole={userRole} />
       </div>
     </header>
   );

@@ -2,11 +2,11 @@ import { useState } from 'react';
 import useLoginState from './useLoginState';
 
 // Abstracted State Hook (similar to useThemeState)
-const useProfileSettingsState = () => {
+const useProfileSettingsState = (userRole = 'admin') => {
   // Connect to the login state to share the email
   const { email, setEmail } = useLoginState();
   
-  const [fname, setFname] = useState('Admin');
+  const [fname, setFname] = useState(userRole === 'teacher' ? 'Teacher' : 'Admin');
   const [lname, setLname] = useState('User');
   const [toast, setToast] = useState('');
   const [toastTimer, setToastTimer] = useState(null);

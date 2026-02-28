@@ -22,7 +22,7 @@ const Sidebar = ({ isOpen, activeTab, onNavigate, onToggle, userRole = 'teacher'
         </button>
         <Logo 
           adminPhoto={adminPhoto} 
-          adminInitials="AD"
+          adminInitials={userRole === 'admin' ? 'AD' : 'TC'}
           showText={isOpen}
         />
       </div>

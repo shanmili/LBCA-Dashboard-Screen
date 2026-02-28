@@ -33,6 +33,7 @@ const MainLayout = ({
           activeTab={activeTab}
           onNavigate={onNavigate}
           adminPhoto={userPhoto ?? adminPhoto}
+          userRole={userRole}
         />
         <main className="content-area">{children}</main>
       </div>

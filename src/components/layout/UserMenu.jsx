@@ -3,7 +3,7 @@ import { ChevronDown, User, Sun, LogOut } from 'lucide-react';
 import Theme from '../common/Theme.jsx';
 import '../../styles/layout/UserMenu.css';
 
-const UserMenu = ({ onLogout, onNavigate, adminPhoto }) => {
+const UserMenu = ({ onLogout, onNavigate, adminPhoto, userRole = 'admin' }) => {
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = useRef(null);
 
@@ -33,11 +33,11 @@ const UserMenu = ({ onLogout, onNavigate, adminPhoto }) => {
         <div className="avatar">
           {adminPhoto ? (
             <img src={adminPhoto} alt="Profile" style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover' }} />
-          ) : 'AD'}
+          ) : (userRole === 'admin' ? 'AD' : 'TC')}
         </div>
         <div className="user-info">
-          <span className="user-name">Admin User</span>
-          <span className="user-role">Administrator</span>
+          <span className="user-name">{userRole === 'admin' ? 'Admin User' : 'Teacher User'}</span>
+          <span className="user-role">{userRole === 'admin' ? 'Administrator' : 'Teacher'}</span>
         </div>
         <ChevronDown size={18} className={`dropdown-icon ${isOpen ? 'rotate' : ''}`} />
       </button>
@@ -45,7 +45,7 @@ const UserMenu = ({ onLogout, onNavigate, adminPhoto }) => {
       {isOpen && (
         <div className="user-dropdown">
           <div className="dropdown-header">
-            <p>Signed in as <strong>Admin</strong></p>
+            <p>Signed in as <strong>{userRole === 'admin' ? 'Admin User' : 'Teacher User'}</strong></p>
           </div>
           
           <div className="dropdown-divider" />

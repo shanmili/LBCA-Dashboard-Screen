@@ -54,11 +54,11 @@ const TeacherScreen = ({ onLogout, user }) => {
         userPhoto={teacherPhoto}
       >
         <Routes>
-          <Route path="/dashboard" element={<Dashboard onNavigate={handleNavigate} />} />
+          <Route path="/dashboard" element={<Dashboard onNavigate={handleNavigate} userRole="teacher" />} />
           <Route path="/students" element={<StudentsPage onNavigate={handleNavigate} />} />
           <Route path="/pace" element={<PacePage onNavigate={handleNavigate} />} />
           <Route path="/risk" element={<EarlyWarningPage onNavigate={handleNavigate} />} />
-          <Route path="/account-settings" element={<ProfileSetting onNavigate={handleNavigate} onAdminPhotoUpdate={setTeacherPhoto} />} />
+          <Route path="/account-settings" element={<ProfileSetting onNavigate={handleNavigate} onAdminPhotoUpdate={setTeacherPhoto} userRole="teacher" />} />
           <Route path="/student/:studentId" element={<StudentsProfile onNavigate={handleNavigate} />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
