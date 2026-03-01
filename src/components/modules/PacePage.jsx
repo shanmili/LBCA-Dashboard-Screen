@@ -7,20 +7,10 @@ const PacePage = () => {
   const {
     filters,
     updateFilter,
-    subjectOptions,
     encodingData,
-    saveMessage,
-    handleCompletedChange,
-    handleScoreChange,
-    handleSave,
-    handleSaveAll,
+    handleDataChange,
+    handleAddPaceForCurrent,
   } = usePaceEncodingState();
-
-  // Combine filters with subjectOptions for the filter component
-  const filterProps = {
-    ...filters,
-    subjectOptions
-  };
 
   return (
     <div className="pace-page">
@@ -33,24 +23,18 @@ const PacePage = () => {
         </div>
         
         <PaceFilter 
-          filters={filterProps}
+          filters={filters}
           onFilterChange={updateFilter}
-          onSaveAll={handleSaveAll}
         />
       </div>
 
-      {/* Save Message */}
-      {saveMessage && (
-        <div className="save-message">
-          <span>{saveMessage}</span>
-        </div>
-      )}
-
       <PaceTable 
         data={encodingData}
-        onCompletedChange={handleCompletedChange}
-        onScoreChange={handleScoreChange}
-        onSave={handleSave}
+        onDataChange={handleDataChange}
+        onAddPaceForCurrent={handleAddPaceForCurrent}
+        subject={filters.subject}
+        section={filters.section}
+        gradeLevel={filters.gradeLevel}
       />
     </div>
   );
