@@ -1,11 +1,12 @@
 import { useState, useEffect, useCallback } from 'react';
 import {
   BookOpen, CalendarDays, Layers, ChevronDown, ChevronRight,
-  Plus, Pencil, Trash2, CheckCircle, Clock, Group,
+  Plus, Pencil, Trash2, CheckCircle, Clock, Group, BookMarked,
 } from 'lucide-react';
 import SchoolYearModal from './SchoolYearModal.jsx';
 import GradeLevelModal from './GradeLevelModal.jsx';
 import SectionModal from './SectionModal.jsx';
+import SubjectModal from './SubjectModal.jsx';
 import '../../../styles/setup/SetupPage.css';
 import '../../../styles/setup/UnifiedSetup.css';
 
@@ -13,6 +14,7 @@ import {
   getSchoolYears, createSchoolYear, updateSchoolYear, deleteSchoolYear,
   getGradeLevels, createGradeLevel, updateGradeLevel, deleteGradeLevel,
   getSections, createSection, updateSection, deleteSection,
+  getSubjects, createSubject, updateSubject, deleteSubject,
 } from '../../../api/setupApi.js';
 
 /* ── Toast helper ───────────────────────────────────────────── */
@@ -41,9 +43,10 @@ const SetupPage = () => {
   const [schoolYears, setSchoolYears] = useState([]);
   const [gradeLevels, setGradeLevels] = useState([]);
   const [sections, setSections] = useState([]);
+  const [subjects, setSubjects] = useState([]);
 
   // ── Loading/error state ──
-  const [loading, setLoading] = useState({ sy: true, gl: true, sec: true });
+  const [loading, setLoading] = useState({ sy: true, gl: true, sec: true, sub: true });
   const [toast, setToast] = useState(null);
 
   // ── Modal state ──
@@ -59,6 +62,10 @@ const SetupPage = () => {
   const [secModalOpen, setSecModalOpen] = useState(false);
   const [editingSec, setEditingSec] = useState(null);
   const [prefillGrade, setPrefillGrade] = useState(null);
+
+  const [subModalOpen, setSubModalOpen] = useState(false);
+  const [editingSub, setEditingSub] = useState(null);
+  const [subExpanded, setSubExpanded] = useState(true);
 
   const showToast = (message, type = 'success') => setToast({ message, type });
 
@@ -96,11 +103,23 @@ const SetupPage = () => {
     }
   }, []);
 
+  const fetchSubjects = useCallback(async () => {
+    try {
+      const data = await getSubjects();
+      setSubjects(data);
+    } catch (err) {
+      showToast('Failed to load subjects.', 'error');
+    } finally {
+      setLoading(prev => ({ ...prev, sub: false }));
+    }
+  }, []);
+
   useEffect(() => {
     fetchSchoolYears();
     fetchGradeLevels();
     fetchSections();
-  }, [fetchSchoolYears, fetchGradeLevels, fetchSections]);
+    fetchSubjects();
+  }, [fetchSchoolYears, fetchGradeLevels, fetchSections, fetchSubjects]);
 
   /* ── School Year handlers ── */
   const handleSaveSY = async (data) => {
@@ -215,8 +234,43 @@ const SetupPage = () => {
     setExpandedGrades(prev => ({ ...prev, [gradeId]: true }));
   };
 
+  const openAddSubject = (gradeId) => {
+    setEditingSub({ grade_level: gradeId });
+    setSubModalOpen(true);
+  };
+
+  /* ── Subject handlers ── */
+  const handleSaveSub = async (data) => {
+    try {
+      if (editingSub) {
+        await updateSubject(editingSub.subject_id, data);
+        showToast('Subject updated successfully.');
+      } else {
+        await createSubject(data);
+        showToast('Subject created successfully.');
+      }
+      await fetchSubjects();
+    } catch (err) {
+      showToast(err.message || 'Failed to save subject.', 'error');
+    } finally {
+      setSubModalOpen(false);
+      setEditingSub(null);
+    }
+  };
+
+  const handleDeleteSub = async (id) => {
+    if (!window.confirm('Delete this subject?')) return;
+    try {
+      await deleteSubject(id);
+      showToast('Subject deleted.');
+      setSubjects(prev => prev.filter(s => s.subject_id !== id));
+    } catch (err) {
+      showToast(err.message || 'Failed to delete subject.', 'error');
+    }
+  };
+
   const current = schoolYears.find(sy => sy.is_current);
-  const isLoading = loading.sy || loading.gl || loading.sec;
+  const isLoading = loading.sy || loading.gl || loading.sec || loading.sub;
 
   return (
     <div className="setup-page unified-setup">
@@ -457,7 +511,97 @@ const SetupPage = () => {
         )}
       </div>
 
-      {/* ── Modals ── */}
+      {/* ══════════════════════════════════════════
+          SECTION 3 — SUBJECTS
+      ══════════════════════════════════════════ */}
+      <div className="us-card">
+        <div className="us-card-header" onClick={() => setSubExpanded(v => !v)}>
+          <div className="us-card-title">
+            <BookMarked size={18} />
+            <span>Subjects</span>
+            <span className="us-count-badge">{subjects.length}</span>
+          </div>
+          <div className="us-card-actions" onClick={e => e.stopPropagation()}>
+            <button
+              className="setup-add-btn us-add-btn"
+              onClick={() => { setEditingSub(null); setSubModalOpen(true); }}
+            >
+              <Plus size={14} /> Add
+            </button>
+            <button className="us-chevron-btn">
+              {subExpanded ? <ChevronDown size={18} /> : <ChevronRight size={18} />}
+            </button>
+          </div>
+        </div>
+
+        {subExpanded && (
+          <div className="us-card-body">
+            {loading.sub ? (
+              <p className="us-empty-hint">Loading subjects...</p>
+            ) : gradeLevels.length === 0 ? (
+              <p className="us-empty-hint">No grade levels available. Add grade levels first.</p>
+            ) : (
+              gradeLevels.map(gl => {
+                const glSubjects = subjects.filter(s => s.grade_level === gl.grade_level_id);
+                return (
+                  <div key={gl.grade_level_id} style={{ marginBottom: '2rem' }}>
+                    <h4 style={{ fontSize: '0.95rem', fontWeight: '600', marginBottom: '1rem', color: '#333' }}>
+                      {gl.level} - {gl.name}
+                    </h4>
+                    {glSubjects.length === 0 ? (
+                      <div className="us-sections-empty">
+                        <BookMarked size={14} />
+                        <span>No subjects yet for this grade level.</span>
+                        <button className="us-inline-add-btn" onClick={() => openAddSubject(gl.grade_level_id)}>
+                          <Plus size={12} /> Add Subject
+                        </button>
+                      </div>
+                    ) : (
+                      <div className="setup-table-card us-table-card">
+                        <table className="setup-table">
+                          <thead>
+                            <tr>
+                              <th>Subject Code</th>
+                              <th>Subject Name</th>
+                              <th>Actions</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {glSubjects.map(sub => (
+                              <tr key={sub.subject_id}>
+                                <td className="setup-td-bold">{sub.subject_code}</td>
+                                <td>{sub.subject_name}</td>
+                                <td>
+                                  <div className="setup-actions">
+                                    <button
+                                      className="setup-action-btn edit"
+                                      onClick={() => { setEditingSub(sub); setSubModalOpen(true); }}
+                                      title="Edit"
+                                    >
+                                      <Pencil size={13} />
+                                    </button>
+                                    <button
+                                      className="setup-action-btn delete"
+                                      onClick={() => handleDeleteSub(sub.subject_id)}
+                                      title="Delete"
+                                    >
+                                      <Trash2 size={13} />
+                                    </button>
+                                  </div>
+                                </td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+                    )}
+                  </div>
+                );
+              })
+            )}
+          </div>
+        )}
+      </div>
       <SchoolYearModal
         isOpen={syModalOpen}
         onClose={() => { setSyModalOpen(false); setEditingSY(null); }}
@@ -477,6 +621,13 @@ const SetupPage = () => {
         editingItem={editingSec}
         gradeLevels={gradeLevels}
         prefillGradeId={prefillGrade}
+      />
+      <SubjectModal
+        isOpen={subModalOpen}
+        onClose={() => { setSubModalOpen(false); setEditingSub(null); }}
+        onSave={handleSaveSub}
+        editingItem={editingSub}
+        gradeLevels={gradeLevels}
       />
     </div>
   );
