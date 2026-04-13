@@ -58,3 +58,23 @@ export const updateSection = (id, data) =>
 
 export const deleteSection = (id) =>
   apiRequest(`/api/sections/${id}/delete/`, { method: 'DELETE' });
+
+// ─── SUBJECTS ────────────────────────────────────────────────
+
+export const getSubjects = () =>
+  apiRequest('/api/subjects/');
+
+export const getSubjectsByGradeLevel = (gradeLevelId) =>
+  apiRequest(`/api/subjects/grade-level/${gradeLevelId}/`);
+
+export const getSubject = (id) =>
+  apiRequest(`/api/subjects/${id}/`);
+
+export const createSubject = (data) =>
+  apiRequest('/api/subjects/create/', { method: 'POST', body: data });
+
+export const updateSubject = (id, data) =>
+  apiRequest(`/api/subjects/${id}/update/`, { method: 'PATCH', body: data });
+
+export const deleteSubject = (id) =>
+  apiRequest(`/api/subjects/${id}/delete/`, { method: 'DELETE' });
