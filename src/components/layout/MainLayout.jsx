@@ -11,7 +11,9 @@ const MainLayout = ({
   activeTab, 
   userRole = 'teacher', 
   adminPhoto,
-  userPhoto
+  userPhoto,
+  searchValue = '',
+  onSearchChange = () => {}
 }) => {
   const { isOpen: sidebarOpen, toggle: toggleSidebar } = useSidebarState();
 
@@ -34,6 +36,8 @@ const MainLayout = ({
           onNavigate={onNavigate}
           adminPhoto={userPhoto ?? adminPhoto}
           userRole={userRole}
+          searchValue={searchValue}
+          onSearchChange={onSearchChange}
         />
         <main className="content-area">{children}</main>
       </div>

@@ -1,11 +1,11 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import StudentTable from './students/StudentTable';
 import StudentFilter from './students/StudentFilter';
 import StudentFormModal from './students/StudentFormModal';
 import useStudentsPageState from '../../hooks/useStudentsPageState';
 import '../../styles/students/StudentsPage.css';
 
-const StudentsPage = ({ onNavigate, teacher = null }) => {
+const StudentsPage = ({ onNavigate, teacher = null, searchQuery = '' }) => {
   const {
     searchTerm,
     setSearchTerm,
@@ -20,6 +20,10 @@ const StudentsPage = ({ onNavigate, teacher = null }) => {
   } = useStudentsPageState(teacher);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  useEffect(() => {
+    setSearchTerm(searchQuery || '');
+  }, [searchQuery, setSearchTerm]);
 
   return (
     <div className="students-page">

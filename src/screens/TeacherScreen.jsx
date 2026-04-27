@@ -13,6 +13,7 @@ import NotFound from '../components/common/NotFound.jsx';
 const TeacherScreen = ({ onLogout, user }) => {
   const navigate = useNavigate();
   const [teacherPhoto, setTeacherPhoto] = useState(null);
+  const [studentsSearch, setStudentsSearch] = useState('');
 
   // Redirect to /dashboard on first mount
   useEffect(() => {
@@ -44,18 +45,29 @@ const TeacherScreen = ({ onLogout, user }) => {
     return 'dashboard';
   };
 
+  const activeTab = getActiveTab();
+
+  const handleSearchChange = (value) => {
+    if (activeTab !== 'students') {
+      return;
+    }
+    setStudentsSearch(value);
+  };
+
   return (
     <NotificationProvider>
       <MainLayout
         onLogout={onLogout}
-        activeTab={getActiveTab()}
+        activeTab={activeTab}
         onNavigate={handleNavigate}
         userRole="teacher"
         userPhoto={teacherPhoto}
+        searchValue={activeTab === 'students' ? studentsSearch : ''}
+        onSearchChange={handleSearchChange}
       >
         <Routes>
           <Route path="/dashboard" element={<Dashboard onNavigate={handleNavigate} userRole="teacher" />} />
-          <Route path="/students" element={<StudentsPage onNavigate={handleNavigate} />} />
+          <Route path="/students" element={<StudentsPage onNavigate={handleNavigate} searchQuery={studentsSearch} />} />
           <Route path="/pace" element={<PacePage onNavigate={handleNavigate} />} />
           <Route path="/risk" element={<EarlyWarningPage onNavigate={handleNavigate} />} />
           <Route path="/account-settings" element={<ProfileSetting onNavigate={handleNavigate} onAdminPhotoUpdate={setTeacherPhoto} userRole="teacher" />} />

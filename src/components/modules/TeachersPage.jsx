@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Users, UserPlus, CheckCircle, XCircle, UserCheck } from 'lucide-react';
 import TeacherTable from './teachers/TeacherTable';
 import TeacherFilter from './teachers/TeacherFilter';
@@ -6,7 +6,7 @@ import TeacherFormModal from './teachers/TeacherFormModal';
 import useTeachersState from '../../hooks/useTeachersState';
 import '../../styles/teachers/TeachersPage.css';
 
-const TeachersPage = ({ onNavigate }) => {
+const TeachersPage = ({ onNavigate, searchQuery = '' }) => {
   const {
     searchTerm,
     setSearchTerm,
@@ -23,6 +23,10 @@ const TeachersPage = ({ onNavigate }) => {
   } = useTeachersState();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  useEffect(() => {
+    setSearchTerm(searchQuery || '');
+  }, [searchQuery, setSearchTerm]);
 
   const stats = {
     total: teachers.length,
