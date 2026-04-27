@@ -16,6 +16,7 @@ import SetupPage from '../components/modules/setup/SetupPage.jsx';
 const AdminScreen = ({ onLogout, user }) => {
   const navigate = useNavigate();
   const [adminPhoto, setAdminPhoto] = useState(null);
+  const [searchByTab, setSearchByTab] = useState({ students: '', teachers: '' });
 
   useEffect(() => {
     const path = window.location.pathname;
@@ -53,6 +54,16 @@ const AdminScreen = ({ onLogout, user }) => {
     return 'dashboard';
   };
 
+  const activeTab = getActiveTab();
+  const currentSearchValue = searchByTab[activeTab] || '';
+
+  const handleSearchChange = (value) => {
+    if (activeTab !== 'students' && activeTab !== 'teachers') {
+      return;
+    }
+    setSearchByTab((prev) => ({ ...prev, [activeTab]: value }));
+  };
+
   const handleAdminPhotoUpdate = (photoUrl) => {
     console.log('Updating admin photo:', photoUrl); // Debug log
     setAdminPhoto(photoUrl);
@@ -62,15 +73,17 @@ const AdminScreen = ({ onLogout, user }) => {
     <NotificationProvider>
       <MainLayout
         onLogout={onLogout}
-        activeTab={getActiveTab()}
+        activeTab={activeTab}
         onNavigate={handleNavigate}
         userRole="admin"
         adminPhoto={adminPhoto}
+        searchValue={currentSearchValue}
+        onSearchChange={handleSearchChange}
       >
         <Routes>
           <Route path="/dashboard" element={<Dashboard onNavigate={handleNavigate} userRole="admin" />} />
-          <Route path="/students" element={<StudentsPage onNavigate={handleNavigate} />} />
-          <Route path="/teachers" element={<TeachersPage onNavigate={handleNavigate} />} />
+          <Route path="/students" element={<StudentsPage onNavigate={handleNavigate} searchQuery={searchByTab.students} />} />
+          <Route path="/teachers" element={<TeachersPage onNavigate={handleNavigate} searchQuery={searchByTab.teachers} />} />
           <Route path="/risk" element={<EarlyWarningPage onNavigate={handleNavigate} />} />
           <Route path="/account-settings" element={
             <ProfileSetting 
