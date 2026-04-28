@@ -1,6 +1,6 @@
 import React from 'react';
-import Header from './Header';
-import Sidebar from './Sidebar';
+import Header from './Header.jsx';
+import Sidebar from './Sidebar.jsx';
 import useSidebarState from '../../hooks/useSidebarState';
 import '../../styles/layout/MainLayout.css';
 

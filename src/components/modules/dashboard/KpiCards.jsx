@@ -1,5 +1,5 @@
 import { Users, TrendingUp, BookOpen, AlertTriangle } from 'lucide-react';
-import StatCard from './StatCard';
+import StatCard from './StatCard.jsx';
 import '../../../styles/dashboard/KpiCards.css';
 
 const KpiCards = ({ data, onNavigate }) => {

@@ -1,6 +1,6 @@
-import RiskSummary from './earlyWarning/RiskSummary';
-import WarningFilter from './earlyWarning/WarningFilter';
-import WarningTable from './earlyWarning/WarningTable';
+import RiskSummary from './earlyWarning/RiskSummary.jsx';
+import WarningFilter from './earlyWarning/WarningFilter.jsx';
+import WarningTable from './earlyWarning/WarningTable.jsx';
 import useEarlyWarningState from '../../hooks/useEarlyWarningState';
 import '../../styles/earlyWarning/EarlyWarningPage.css';
 

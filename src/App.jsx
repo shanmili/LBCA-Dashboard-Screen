@@ -1,9 +1,9 @@
 import { BrowserRouter, Routes, Route, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import TeacherScreen from './screens/TeacherScreen';
-import AdminScreen from './screens/AdminScreen';
-import LoginScreen from './screens/LoginScreen';
-import AuthController from './AuthController';
+import TeacherScreen from './screens/TeacherScreen.jsx';
+import AdminScreen from './screens/AdminScreen.jsx';
+import LoginScreen from './screens/LoginScreen.jsx';
+import AuthController from './AuthController.jsx';
 
 import './styles/Variables.css';
 import './styles/Global.css';
@@ -16,9 +16,9 @@ import './styles/layout/UserMenu.css';
 import './styles/layout/Notification.css';
 import './styles/profileSetting/ProfileSetting.css';
 
-import { SchoolProvider } from './context/SchoolContext';
-import LoadingScreen from './components/common/LoadingScreen';
-import { login, logout } from './api/authApi';
+import { SchoolProvider } from './context/SchoolContext.jsx';
+import LoadingScreen from './components/common/LoadingScreen.jsx';
+import { login, logout } from './api/authApi.js';
 
 function AppContent() {
   const navigate = useNavigate();

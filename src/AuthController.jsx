@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import LoginScreen from './screens/LoginScreen';
-import RegisterScreen from './screens/RegisterScreen';
-import OTPScreen from './screens/OTPScreen';
-import ForgotPasswordScreen from './screens/ForgotPasswordScreen';
-import ResetPasswordScreen from './screens/ResetPassword';
+import LoginScreen from './screens/LoginScreen.jsx';
+import RegisterScreen from './screens/RegisterScreen.jsx';
+import OTPScreen from './screens/OTPScreen.jsx';
+import ForgotPasswordScreen from './screens/ForgotPasswordScreen.jsx';
+import ResetPasswordScreen from './screens/ResetPassword.jsx';
 
 // Use the same env var names as `src/services/api.js` so both modules target the same backend.
 const API_BASE = import.meta.env.VITE_API_BASE_URL || import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000';
