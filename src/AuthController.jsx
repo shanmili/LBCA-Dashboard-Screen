@@ -23,27 +23,22 @@ const DEVICE_ID = (() => {
  */
 const extractErrorMessage = (data, defaultMessage = 'An error occurred') => {
   if (!data) return defaultMessage;
-  
-  // If data.detail is a string, use it
+
   if (typeof data.detail === 'string') return data.detail;
-  
-  // If data.detail is an object, try to extract message
+
   if (data.detail && typeof data.detail === 'object') {
     if (data.detail.message) return data.detail.message;
     if (data.detail.error) return data.detail.error;
-    // If it has multiple errors, join them
     if (Array.isArray(data.detail)) {
-      return data.detail.map(err => 
+      return data.detail.map(err =>
         typeof err === 'string' ? err : err.message || err.error || 'Unknown error'
       ).join(', ');
     }
   }
-  
-  // Check for other common error fields
+
   if (data.message) return data.message;
   if (data.error) return data.error;
-  
-  // Last resort
+
   return defaultMessage;
 };
 
@@ -85,22 +80,13 @@ const AuthController = ({ onAuthSuccess }) => {
   const handleLogin = async (email, password) => {
     setIsLoading(true);
     clearError();
-    // Try a list of common auth endpoints until one returns a JSON response
+
+    // ✅ FIX: Only try endpoints that actually exist in the Django backend.
+    // Teacher login is tried first. Admin login second. DRF token as fallback.
     const candidates = [
-      '/api/sessions',
-      '/api/v1/sessions',
-      '/api/auth/login',
-      '/api/v1/auth/login',
-      '/api/token-auth/',
-      '/api/token/',
-      '/api/auth/token/login/',
-      '/api/login/',
-      '/auth/token/login/',
-      // Django backend custom admin/teacher endpoints
-      '/api/admin/login/',
-      '/api/v1/admin/login/',
       '/api/teacher/login/',
-      '/api/v1/teacher/login/',
+      '/api/admin/login/',
+      '/api/token/',
     ];
 
     let lastError = null;
@@ -110,9 +96,10 @@ const AuthController = ({ onAuthSuccess }) => {
           const url = `${API_BASE.replace(/\/$/, '')}${path}`;
           const res = await fetch(url, {
             method: 'POST',
+            mode: 'cors',
+            credentials: 'include',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-              // Some backends expect `username` instead of `email` (Django admin)
               username: email,
               email,
               password,
@@ -123,17 +110,17 @@ const AuthController = ({ onAuthSuccess }) => {
 
           const data = await parseResponseBody(res);
 
-          // If server returned HTML or non-json, parseResponseBody returns an object with detail explaining that.
           if (!res.ok && (!data || typeof data !== 'object')) {
             lastError = new Error(`Endpoint ${path} returned non-JSON response`);
             continue;
           }
 
-          // If response is JSON but not ok, surface its message
           if (!res.ok) {
             lastError = new Error(extractErrorMessage(data, `Login failed at ${path}`));
-            // If 401/403, credentials may be wrong — stop trying further candidate endpoints
-            if (res.status === 401 || res.status === 403) break;
+            // ✅ FIX: Only break on 401 (wrong password/credentials).
+            // Do NOT break on 403 — that just means wrong role for this endpoint,
+            // so we should continue and try the next endpoint (e.g. admin vs teacher).
+            if (res.status === 401) break;
             continue;
           }
 
@@ -153,7 +140,6 @@ const AuthController = ({ onAuthSuccess }) => {
             setAuthToken(access);
             if (refresh) localStorage.setItem('refresh_token', refresh);
             const user = data.user || data.data?.user || data;
-            // Ensure email is included in user object for role determination
             if (!user.email) {
               user.email = email;
             }
@@ -161,9 +147,7 @@ const AuthController = ({ onAuthSuccess }) => {
             return;
           }
 
-          // If no token fields but login succeeded, try to proceed with returned user
           if (data.user) {
-            // Ensure email is included
             const userWithEmail = { ...data.user };
             if (!userWithEmail.email) {
               userWithEmail.email = email;
@@ -184,7 +168,7 @@ const AuthController = ({ onAuthSuccess }) => {
       // If configured, allow a local mock fallback for testing credentials
       if (USE_MOCK_FALLBACK) {
         const lcEmail = (email || '').toLowerCase();
-        // demo admin
+
         if (lcEmail === 'admin@lbca.edu.ph' && password === 'Admin123!') {
           const demoAccess = 'demo-admin-token';
           const demoUser = { id: 'demo-admin', email: lcEmail, role: 'admin', name: 'LBCA Admin' };
@@ -195,7 +179,6 @@ const AuthController = ({ onAuthSuccess }) => {
           return;
         }
 
-        // demo teacher
         if (lcEmail === 'teacher@lbca.edu.ph' && password === 'Teacher123!') {
           const demoAccess = 'demo-teacher-token';
           const demoUser = { id: 'demo-teacher', email: lcEmail, role: 'teacher', name: 'Demo Teacher' };
@@ -220,6 +203,8 @@ const AuthController = ({ onAuthSuccess }) => {
     try {
       const res = await fetch(`${API_BASE}/api/otp`, {
         method: 'POST',
+        mode: 'cors',
+        credentials: 'include',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           user_id: pendingUserId,
@@ -246,8 +231,6 @@ const AuthController = ({ onAuthSuccess }) => {
   };
 
   const handleResendLoginOtp = async () => {
-    // Re-trigger login to resend OTP — uses stored email
-    // A real implementation would have a dedicated resend endpoint
     clearError();
   };
 
@@ -258,12 +241,13 @@ const AuthController = ({ onAuthSuccess }) => {
     try {
       const res = await fetch(`${API_BASE}/api/users`, {
         method: 'POST',
+        mode: 'cors',
+        credentials: 'include',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
       });
       const data = await parseResponseBody(res);
       if (!res.ok) throw new Error(extractErrorMessage(data, 'Registration failed'));
-      // RegisterScreen handles its own success state
     } catch (err) {
       setError(err.message || err.toString() || 'Registration failed');
       throw err;
@@ -284,13 +268,15 @@ const AuthController = ({ onAuthSuccess }) => {
     try {
       const res = await fetch(`${API_BASE}/api/password-reset`, {
         method: 'POST',
+        mode: 'cors',
+        credentials: 'include',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email }),
       });
       const data = await parseResponseBody(res);
       if (!res.ok) throw new Error(extractErrorMessage(data, 'Request failed'));
       setPendingEmail(email);
-      setScreen('otp-reset'); // Go directly to OTP screen
+      setScreen('otp-reset');
     } catch (err) {
       setError(err.message || err.toString() || 'Request failed');
     } finally {
@@ -299,31 +285,32 @@ const AuthController = ({ onAuthSuccess }) => {
   };
 
   // ─── Verify Reset OTP ─────────────────────────────────────
-const handleVerifyResetOtp = async (code) => {
-  setIsLoading(true);
-  clearError();
-  try {
-    const res = await fetch(`${API_BASE}/api/password-reset/validate-otp`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email: pendingEmail, code }),
-    });
-    const data = await parseResponseBody(res);
-    if (!res.ok) throw new Error(extractErrorMessage(data, 'Invalid OTP'));
-    
-    // OTP is valid, store it and proceed to password form
-    setPendingOtpCode(code);
-    setScreen('reset-password');
-  } catch (err) {
-    setError(err.message || err.toString() || 'Invalid OTP');
-  } finally {
-    setIsLoading(false);
-  }
-};
+  const handleVerifyResetOtp = async (code) => {
+    setIsLoading(true);
+    clearError();
+    try {
+      const res = await fetch(`${API_BASE}/api/password-reset/validate-otp`, {
+        method: 'POST',
+        mode: 'cors',
+        credentials: 'include',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: pendingEmail, code }),
+      });
+      const data = await parseResponseBody(res);
+      if (!res.ok) throw new Error(extractErrorMessage(data, 'Invalid OTP'));
 
-const handleResendResetOtp = async () => {
-  await handleForgotPassword(pendingEmail);
-};
+      setPendingOtpCode(code);
+      setScreen('reset-password');
+    } catch (err) {
+      setError(err.message || err.toString() || 'Invalid OTP');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleResendResetOtp = async () => {
+    await handleForgotPassword(pendingEmail);
+  };
 
   // ─── Reset Password ───────────────────────────────────────
   const handleResetPassword = async ({ token, new_password, confirm_password }) => {
@@ -332,13 +319,14 @@ const handleResendResetOtp = async () => {
     try {
       const res = await fetch(`${API_BASE}/api/password-reset`, {
         method: 'PATCH',
+        mode: 'cors',
+        credentials: 'include',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ token, new_password, confirm_password }),
       });
       const data = await parseResponseBody(res);
       if (!res.ok) throw new Error(extractErrorMessage(data, 'Reset failed'));
       setScreen('login');
-      // Optionally show a success toast here
     } catch (err) {
       setError(err.message || err.toString() || 'Reset failed');
     } finally {

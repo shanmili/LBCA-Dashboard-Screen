@@ -90,18 +90,50 @@ export async function apiRequest(path, options = {}) {
     requestHeaders.Authorization = `Token ${token}`;
   }
 
-  const response = await fetch(buildUrl(path, params), {
-    method,
-    headers: requestHeaders,
-    body: body ? JSON.stringify(body) : undefined,
-  });
+  const url = buildUrl(path, params);
+  
+  try {
+    const response = await fetch(url, {
+      method,
+      mode: 'cors',
+      credentials: 'include',
+      headers: requestHeaders,
+      body: body ? JSON.stringify(body) : undefined,
+    });
 
-  const payload = await parseJsonSafely(response);
+    const contentType = response.headers.get('content-type');
+    const isJsonResponse = contentType && contentType.includes('application/json');
 
-  if (!response.ok) {
-    const message = toErrorMessage(payload, response.status);
-    throw new Error(message);
+    if (!isJsonResponse) {
+      // Server returned HTML instead of JSON (likely an error page or wrong endpoint)
+      const htmlContent = await response.text();
+      console.error('Server returned HTML instead of JSON:', {
+        url,
+        method,
+        status: response.status,
+        statusText: response.statusText,
+        htmlPreview: htmlContent.substring(0, 200),
+      });
+      throw new Error(
+        `Server error (${response.status}): Endpoint may not exist or server misconfigured. Check VITE_API_BASE_URL and backend availability.`
+      );
+    }
+
+    const payload = await response.json();
+
+    if (!response.ok) {
+      const message = toErrorMessage(payload, response.status);
+      throw new Error(message);
+    }
+
+    return payload;
+  } catch (error) {
+    if (error instanceof TypeError && error.message.includes('fetch')) {
+      console.error('Network error - backend may be down or unreachable:', error);
+      throw new Error(
+        `Cannot reach API server at ${url}. Check VITE_API_BASE_URL and ensure backend is running.`
+      );
+    }
+    throw error;
   }
-
-  return payload;
 }
