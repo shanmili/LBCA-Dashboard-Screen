@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import PrintStudentProfile from '../components/modules/students/PrintStudentProfile';
-import { getStudent, mapStudentFormToApi, mapStudentToUi, updateStudent } from '../api/studentsApi';
+import { getStudent, getStudentAIAnalysis, mapStudentFormToApi, mapStudentToUi, updateStudent } from '../api/studentsApi';
 
 const TABS = [
   { id: 'overview', label: 'Overview' },
@@ -13,6 +13,7 @@ export default function useStudentProfileState(studentId) {
   const [activeTab, setActiveTab] = useState('overview');
   const [showEditModal, setShowEditModal] = useState(false);
   const [studentData, setStudentData] = useState(null);
+  const [aiAnalysis, setAIAnalysis] = useState(null);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(true);
 
@@ -24,15 +25,21 @@ export default function useStudentProfileState(studentId) {
       setError('');
 
       try {
-        const row = await getStudent(studentId);
+        const [row, aiData] = await Promise.all([
+          getStudent(studentId),
+          getStudentAIAnalysis(studentId),
+        ]);
+        
         if (isMounted) {
           setStudentData(mapStudentToUi(row));
+          setAIAnalysis(aiData);
         }
       } catch (requestError) {
         if (!isMounted) {
           return;
         }
         setStudentData(null);
+        setAIAnalysis(null);
         setError(
           requestError instanceof Error
             ? requestError.message
@@ -126,6 +133,7 @@ export default function useStudentProfileState(studentId) {
     showEditModal,
     setShowEditModal,
     student: studentData,
+    aiAnalysis,
     loading,
     error,
     handleSaveEdit,

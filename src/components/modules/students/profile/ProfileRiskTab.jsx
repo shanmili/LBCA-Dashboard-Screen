@@ -1,13 +1,61 @@
-import { AlertTriangle, Shield } from 'lucide-react';
+import { AlertTriangle, Shield, Brain, TrendingUp } from 'lucide-react';
 import RiskBadge from '../../../common/RiskBadge';
 
-const ProfileRiskTab = ({ student }) => {
+const ProfileRiskTab = ({ student, aiAnalysis }) => {
   return (
     <div className="tab-content risk-tab">
       <div className="current-risk">
         <span>Current Risk Level:</span>
         <RiskBadge level={student.riskLevel} />
       </div>
+
+      {/* AI Analysis Section */}
+      {aiAnalysis && (
+        <div className="ai-analysis-section">
+          <div className="ai-analysis-header">
+            <Brain size={20} />
+            <h4>AI Prediction Analysis</h4>
+          </div>
+          
+          {aiAnalysis.risk_probability !== undefined && (
+            <div className="ai-prediction-card">
+              <div className="prediction-metric">
+                <span className="metric-label">Risk Probability:</span>
+                <span className="metric-value">{aiAnalysis.risk_probability?.toFixed(1)}%</span>
+              </div>
+              {aiAnalysis.confidence_score !== undefined && (
+                <div className="prediction-metric">
+                  <span className="metric-label">Confidence:</span>
+                  <span className="metric-value">{aiAnalysis.confidence_score?.toFixed(1)}%</span>
+                </div>
+              )}
+            </div>
+          )}
+
+          {aiAnalysis.predicted_factors && aiAnalysis.predicted_factors.length > 0 && (
+            <div className="predicted-factors">
+              <h5>Predicted Risk Factors</h5>
+              {aiAnalysis.predicted_factors.map((factor, idx) => (
+                <div key={idx} className="factor-item">
+                  <TrendingUp size={14} />
+                  <span>{factor}</span>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {aiAnalysis.recommendations && aiAnalysis.recommendations.length > 0 && (
+            <div className="ai-recommendations">
+              <h5>AI-Recommended Interventions</h5>
+              {aiAnalysis.recommendations.map((rec, idx) => (
+                <div key={idx} className="recommendation-item">
+                  <p>{rec}</p>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
 
       {/* Factor Cards */}
       {student.riskDetails && student.riskDetails.length > 0 ? (

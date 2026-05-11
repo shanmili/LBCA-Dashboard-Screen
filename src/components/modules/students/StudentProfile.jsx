@@ -24,6 +24,7 @@ const StudentProfile = ({ onNavigate }) => {
     activeTab, setActiveTab,
     showEditModal, setShowEditModal,
     student,
+    aiAnalysis,
     loading,
     error,
     handleSaveEdit,
@@ -75,7 +76,7 @@ const StudentProfile = ({ onNavigate }) => {
       case 'overview':    return <ProfileOverviewTab student={student} />;
       case 'pace':        return <ProfilePaceTab student={student} />;
       case 'attendance':  return <ProfileAttendanceTab student={student} />;
-      case 'risk':        return <ProfileRiskTab student={student} />;
+      case 'risk':        return <ProfileRiskTab student={student} aiAnalysis={aiAnalysis} />;
       default:            return null;
     }
   };

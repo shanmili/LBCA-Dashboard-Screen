@@ -103,6 +103,10 @@ export function deleteStudent(studentId) {
   });
 }
 
+export function getStudentAIAnalysis(studentId) {
+  return apiRequest(`${STUDENTS_PATH}${studentId}/ai-analysis/`);
+}
+
 export function listEnrollments() {
   return apiRequest(ENROLLMENTS_PATH);
 }
