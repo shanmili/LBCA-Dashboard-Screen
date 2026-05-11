@@ -152,13 +152,22 @@ const AuthController = ({ onAuthSuccess }) => {
             localStorage.setItem('access_token', access);
             if (refresh) localStorage.setItem('refresh_token', refresh);
             const user = data.user || data.data?.user || data;
+            // Ensure email is included in user object for role determination
+            if (!user.email) {
+              user.email = email;
+            }
             onAuthSuccess(access, refresh, user);
             return;
           }
 
           // If no token fields but login succeeded, try to proceed with returned user
           if (data.user) {
-            onAuthSuccess(null, null, data.user);
+            // Ensure email is included
+            const userWithEmail = { ...data.user };
+            if (!userWithEmail.email) {
+              userWithEmail.email = email;
+            }
+            onAuthSuccess(null, null, userWithEmail);
             return;
           }
 
@@ -223,7 +232,11 @@ const AuthController = ({ onAuthSuccess }) => {
 
       localStorage.setItem('access_token', data.access_token);
       localStorage.setItem('refresh_token', data.refresh_token);
-      onAuthSuccess(data.access_token, data.refresh_token, data.user);
+      const userWithEmail = { ...data.user };
+      if (!userWithEmail.email) {
+        userWithEmail.email = pendingEmail;
+      }
+      onAuthSuccess(data.access_token, data.refresh_token, userWithEmail);
     } catch (err) {
       setError(err.message || err.toString() || 'Invalid OTP');
     } finally {

@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { studentsData } from '../data/mockData';
 import PrintStudentProfile from '../components/modules/students/PrintStudentProfile';
 import { getStudent, mapStudentFormToApi, mapStudentToUi, updateStudent } from '../api/studentsApi';
 
@@ -33,9 +32,7 @@ export default function useStudentProfileState(studentId) {
         if (!isMounted) {
           return;
         }
-
-        const fallback = studentsData.find((s) => String(s.id) === String(studentId));
-        setStudentData(fallback || null);
+        setStudentData(null);
         setError(
           requestError instanceof Error
             ? requestError.message

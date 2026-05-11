@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { paceSubjects, paceEncodingData, studentsData, studentGrades, studentSections } from '../data/mockData';
+import { paceSubjects, studentGrades, studentSections } from '../data/mockData';
 import { listEnrollments, listStudents } from '../api/studentsApi';
 import { createStudentPace, listStudentPaces, updateStudentPace } from '../api/warningPaceApi';
 
@@ -15,9 +15,7 @@ export default function usePaceEncodingState() {
   });
 
   // Store all PACE data
-  const [paceDataStore, setPaceDataStore] = useState(() => {
-    return paceEncodingData;
-  });
+  const [paceDataStore, setPaceDataStore] = useState({});
 
   const [encodingData, setEncodingData] = useState([]);
   const [allStudents, setAllStudents] = useState([]);
@@ -46,15 +44,7 @@ export default function usePaceEncodingState() {
         }
       } catch {
         if (isMounted) {
-          setAllStudents(
-            studentsData.map((student) => ({
-              id: String(student.id),
-              firstName: student.firstName || '',
-              lastName: student.lastName || '',
-              gradeLevel: student.gradeLevel || '',
-              section: student.section || '',
-            }))
-          );
+          setAllStudents([]);
         }
       }
     };

@@ -15,35 +15,32 @@ const buildLoginBody = (identifier, password) => ({
 export async function login(identifier, password) {
   const credentials = buildLoginBody(identifier, password);
 
-  const attempts = [
-    { role: 'admin', path: ADMIN_LOGIN_PATH },
-    { role: 'teacher', path: TEACHER_LOGIN_PATH },
-  ];
+  // Determine role based on email pattern FIRST
+  const isAdmin = identifier?.toLowerCase().includes('admin');
+  const role = isAdmin ? 'admin' : 'teacher';
+  const path = isAdmin ? ADMIN_LOGIN_PATH : TEACHER_LOGIN_PATH;
 
-  let lastError = null;
+  try {
+    const payload = await apiRequest(path, {
+      method: 'POST',
+      body: credentials,
+      auth: false,
+    });
 
-  for (const attempt of attempts) {
-    try {
-      const payload = await apiRequest(attempt.path, {
-        method: 'POST',
-        body: credentials,
-        auth: false,
-      });
-
-      if (payload?.token) {
-        setAuthToken(payload.token);
-      }
-
-      return {
-        role: attempt.role,
-        payload,
-      };
-    } catch (error) {
-      lastError = error;
+    if (payload?.token) {
+      setAuthToken(payload.token);
     }
-  }
 
-  throw lastError || new Error('Login failed');
+    // Use the payload's role if available, otherwise use the determined role
+    const finalRole = payload?.role || role;
+
+    return {
+      role: finalRole,
+      payload,
+    };
+  } catch (error) {
+    throw error || new Error('Login failed');
+  }
 }
 
 export async function logout(role) {

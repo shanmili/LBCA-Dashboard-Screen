@@ -1,5 +1,4 @@
 import { useEffect, useMemo, useState } from 'react';
-import { teachersData } from '../data/mockData';
 import {
   createTeacher,
   deleteTeacher,
@@ -14,7 +13,7 @@ export default function useTeachersState() {
     status: 'active', // Default show active accounts
     customized: 'All'
   });
-  const [teachers, setTeachers] = useState(teachersData);
+  const [teachers, setTeachers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
@@ -33,7 +32,6 @@ export default function useTeachersState() {
         if (!isMounted) {
           return;
         }
-        setTeachers(teachersData);
         setError(
           requestError instanceof Error
             ? requestError.message

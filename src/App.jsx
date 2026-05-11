@@ -75,9 +75,19 @@ function AppContent() {
     try {
       if (accessToken) localStorage.setItem('access_token', accessToken);
       if (refreshToken) localStorage.setItem('refresh_token', refreshToken);
+      
+      // Get email to check for admin
+      const email = userObj?.email || userObj?.user?.email || '';
+      
+      // Determine role: from backend, or from email pattern
+      let role = userObj?.role || userObj?.user?.role;
+      if (!role) {
+        role = email?.toLowerCase().includes('admin') ? 'admin' : 'teacher';
+      }
+      
       const userData = {
-        role: userObj?.role || userObj?.user?.role || 'teacher',
-        username: userObj?.username || userObj?.user?.username || userObj?.email || '',
+        role,
+        username: userObj?.username || userObj?.user?.username || email || '',
         firstName: userObj?.first_name || userObj?.user?.first_name || '',
         lastName: userObj?.last_name || userObj?.user?.last_name || '',
       };

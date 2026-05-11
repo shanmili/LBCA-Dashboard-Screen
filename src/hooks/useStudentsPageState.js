@@ -1,5 +1,4 @@
 import { useEffect, useMemo, useState } from 'react';
-import { studentsData } from '../data/mockData';
 import {
   createStudent,
   listStudents,
@@ -18,7 +17,7 @@ export default function useStudentsPageState(teacher = null) {
     section: 'All',
     status: 'All'
   });
-  const [students, setStudents] = useState(studentsData);
+  const [students, setStudents] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
@@ -58,7 +57,6 @@ export default function useStudentsPageState(teacher = null) {
         if (!isMounted) {
           return;
         }
-        setStudents(studentsData);
         setError(
           requestError instanceof Error
             ? requestError.message

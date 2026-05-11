@@ -1,5 +1,4 @@
 import { useEffect, useMemo, useState } from 'react';
-import { studentsData } from '../data/mockData';
 import { listStudents, mapStudentToUi } from '../api/studentsApi';
 import { listEarlyWarnings } from '../api/warningPaceApi';
 
@@ -12,7 +11,7 @@ export default function useEarlyWarningState() {
     risk: 'All',
     section: 'All'
   });
-  const [allStudents, setAllStudents] = useState(studentsData);
+  const [allStudents, setAllStudents] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
@@ -44,8 +43,6 @@ export default function useEarlyWarningState() {
         if (!isMounted) {
           return;
         }
-
-        setAllStudents(studentsData);
         setError(
           requestError instanceof Error
             ? requestError.message
