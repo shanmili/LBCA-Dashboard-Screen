@@ -3,13 +3,13 @@ import { Eye, EyeOff } from 'lucide-react';
 import '../styles/Login.css';
 
 const LoginScreen = ({ onLogin, onForgotPassword, onRegister, error, isLoading }) => {
-  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (typeof onLogin === 'function') onLogin(email, password);
+    if (typeof onLogin === 'function') onLogin(username, password);
   };
 
   return (
@@ -27,16 +27,16 @@ const LoginScreen = ({ onLogin, onForgotPassword, onRegister, error, isLoading }
 
         <form className="login-form" onSubmit={handleSubmit}>
           <div className="form-group">
-            <label className="form-label">Email Address</label>
+            <label className="form-label">Username / Email</label>
             <input
-              type="email"
+              type="text"
               className="form-input"
-              placeholder="Enter your email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Enter your email or username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
               required
               disabled={isLoading}
-              autoComplete="email"
+              autoComplete="username"
             />
           </div>
 

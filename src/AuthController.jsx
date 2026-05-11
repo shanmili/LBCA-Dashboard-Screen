@@ -77,7 +77,7 @@ const AuthController = ({ onAuthSuccess }) => {
   const clearError = () => setError('');
 
   // ─── Login ───────────────────────────────────────────────
-  const handleLogin = async (email, password) => {
+  const handleLogin = async (username, password) => {
     setIsLoading(true);
     clearError();
 
@@ -100,8 +100,7 @@ const AuthController = ({ onAuthSuccess }) => {
             credentials: 'include',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-              username: email,
-              email,
+              username: username,
               password,
               device_id: DEVICE_ID,
               device_name: navigator.userAgent.slice(0, 100),
