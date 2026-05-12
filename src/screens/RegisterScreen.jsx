@@ -69,6 +69,7 @@ const RegisterScreen = ({ onRegister, onBack, error, isLoading }) => {
         email: form.email,
         contact_number: form.contact_number,
         password: form.password,
+        password_confirm: form.confirm_password,
       });
       setSuccess(true);
     } catch (_) {}

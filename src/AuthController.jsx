@@ -234,17 +234,25 @@ const AuthController = ({ onAuthSuccess }) => {
   };
 
   // ─── Registration ─────────────────────────────────────────
+ // ─── Registration ─────────────────────────────────────────
   const handleRegister = async (formData) => {
     setIsLoading(true);
     clearError();
     try {
-      const res = await fetch(`${API_BASE}/api/users`, {
+      // ✅ FIX: Grab whatever your frontend called it, and force it into 'password_confirm'
+      const payload = {
+        ...formData,
+        password_confirm: formData.confirmPassword || formData.confirm_password || formData.password_confirm
+      };
+
+      const res = await fetch(`${API_BASE}/api/admin/register/`, { 
         method: 'POST',
         mode: 'cors',
         credentials: 'include',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(payload), // <--- Make sure this says 'payload', not 'formData'
       });
+      
       const data = await parseResponseBody(res);
       if (!res.ok) throw new Error(extractErrorMessage(data, 'Registration failed'));
     } catch (err) {
